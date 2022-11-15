@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\EmployeePlantilla;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -12,8 +13,10 @@ use Illuminate\Support\Facades\Session;
 class UserController extends Controller
 {
     private $user;
-    public function __construct(User $user)
+    private $Plantilla;
+    public function __construct(User $user, EmployeePlantilla $Plantilla)
     {
+        $this->Plantilla = $Plantilla;
         $this->user = $user;
         $this->middleware('auth');
     }
@@ -30,21 +33,22 @@ class UserController extends Controller
         $total_emp_count = 0;
         $ol_emp_count = 0;
         $ol_users_count = 0;
-        $all_users = $this->user->latest()->get();
+        $all_users = $this->user
+        ->latest()
+        ->NotAdmin()->get();
         foreach ($all_users as $user) {
             if (Cache::has('user-is-online-' . $user->id)) {
                 $total_online_alluser++;
             }
-            if ($user->role == 2) {
-                $total_emp_count ++;
-                if (Cache::has('user-is-online-' . $user->id)) {
-                    $ol_emp_count++;
-                }
-            }
-            if ($user->role == 1) {
+            if ($user->role == 1 || $user->role == 6) {
                 $total_users_count ++;
                 if (Cache::has('user-is-online-' . $user->id)) {
                     $ol_users_count++;
+                }
+            } elseif ($user->role = 1) {
+                $total_emp_count ++;
+                if (Cache::has('user-is-online-' . $user->id)) {
+                    $ol_emp_count++;
                 }
             }
         }
@@ -66,10 +70,12 @@ class UserController extends Controller
             ->where('first_name', 'like', '%'.$request->search.'%')
             ->orWhere('last_name', 'like', '%'.$request->search.'%')
             ->withTrashed()
-            ->paginate(10);
+            ->NotAdmin()
+            ->paginate(20);
         } else {
             $all_users = $this->user->latest()
-            ->withTrashed()->paginate(10);
+            ->NotAdmin()
+            ->withTrashed()->paginate(20);
         }
         return view('admin.dashboard')
         ->with('all_users', $all_users)
@@ -143,9 +149,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request,$id);
-        $user = $this->user->findOrFail($id);
-        $user->role = $request->user_role;
+        if ($request->user_role == 6) {
+            $plantilla = $this->Plantilla->where('user_id',$id)->first();
+            $plantilla->user_id = null;
+            $plantilla->EPdesignation = null;
+            $plantilla->save();
+        }
+            $user = $this->user->findOrFail($id);
+            $user->role = $request->user_role;
         if ($user->save()) {
             Session::flash('alert', 'success|User role has been Saved!');
         } else {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLearningdevelopmentsTable extends Migration
+class CreateCovidsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateLearningdevelopmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('learningdevelopments', function (Blueprint $table) {
+        Schema::create('covids', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('LDtitle')->nullable();
-            $table->string('LDidfrom')->nullable();
-            $table->string('LDidto')->nullable();
-            $table->integer('LDnumhour')->nullable();
-            $table->string('LDtype')->nullable();
-            $table->string('LDconducted')->nullable();
-            $table->string('document')->nullable();
+            $table->string('booster');
+            $table->string('photo');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -36,6 +31,6 @@ class CreateLearningdevelopmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('learningdevelopments');
+        Schema::dropIfExists('covids');
     }
 }

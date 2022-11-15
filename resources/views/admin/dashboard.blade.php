@@ -124,9 +124,9 @@
                                 <form action="{{ route('admin.user.update', $user->id) }}" method="POST" id="role_id">
                                     @csrf
                                     @method('PATCH')
-                                    <select @if ($user->role === '4') disabled @endif
+                                    <select @if ($user->id === '1') disabled @endif
                                         class="form-select form-select-sm" name="user_role" id="user_role"
-                                        onchange="role_id.submit()">
+                                        onchange="submit()">
                                         <option @if ($user->role === '0') selected @endif value="0">Admin
                                         </option>
                                         <option @if ($user->role === '1') selected @endif value="1">User

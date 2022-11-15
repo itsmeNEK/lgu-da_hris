@@ -64,7 +64,7 @@
             <div class="row mb-3">
                 <div class="col-12 col-md">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control text-uppercase" name="LDnumhour" id="LDnumhour"
+                        <input type="number" class="form-control text-uppercase" name="LDnumhour" id="LDnumhour"
                             placeholder=""
                             @if ($edit_lnd) value="{{ $edit_lnd->LDnumhour }}"
                             @else

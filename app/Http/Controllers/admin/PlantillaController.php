@@ -35,12 +35,14 @@ class PlantillaController extends Controller
             $all_plantilla = $this->plantilla->orderBy('EPno', 'asc')->paginate(10);
         }
 
-        $all_department = $this->department->paginate(10);
+        $t_department = $this->department->paginate(5);
+        $all_department = $this->department->get();
         $all_user = $this->user
         ->where('role', '!=', '0')
         ->where('role', '!=', '1')
         ->where('role', '!=', '6')->get();
         return view('hr.plantilla')->with('all_plantilla', $all_plantilla)
+        ->with('t_department', $t_department)
         ->with('all_department', $all_department)
         ->with('edit_plan', null)
         ->with('edit_dep', null)
@@ -54,7 +56,9 @@ class PlantillaController extends Controller
      */
     public function create()
     {
-        //
+        $user = $this->user->paginate(30);
+
+    	return response()->json($user);
     }
 
     /**
@@ -110,12 +114,14 @@ class PlantillaController extends Controller
     public function edit($id)
     {
         $all_plantilla = $this->plantilla->orderBy('EPno', 'asc')->paginate(10);
-        $all_department = $this->department->paginate(10);
+        $t_department = $this->department->paginate(10);
+        $all_department = $this->department->get();
         $plantilla = $this->plantilla->findOrFail($id);
         $all_user = $this->user->get();
         return view('hr.plantilla')
         ->with('all_plantilla', $all_plantilla)
         ->with('all_department', $all_department)
+        ->with('t_department', $t_department)
         ->with('edit_plan', $plantilla)
         ->with('edit_dep', null)
         ->with('all_user', $all_user);

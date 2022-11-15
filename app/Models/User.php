@@ -13,6 +13,7 @@ use App\Models\pds\otherinformation;
 use App\Models\pds\personal;
 use App\Models\pds\voluntarywork;
 use App\Models\pds\workexperience;
+use App\Models\users\application;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +45,7 @@ class User extends Authenticatable
         'last_seen',
     ];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -63,6 +65,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeEMP($query)
+    {
+        return $query->where('role', '2')
+        ->orwhere('role', '0')
+        ->where('id', '!=', '1')
+        ->orwhere('role', '3')
+        ->orwhere('role', '4')
+        ->orwhere('role', '5');
+    }
+
+    public function scopeUser($query)
+    {
+        return $query->where('role', '1');
+    }
+
+    public function scopeRetired($query)
+    {
+        return $query->where('role', '6');
+    }
+
+    public function scopeNotAdmin($query)
+    {
+        return $query->where('id', '<>', '1');
+    }
     public function pdsPersonal()
     {
         return $this->hasMany(personal::class, 'user_id');
@@ -125,14 +151,25 @@ class User extends Authenticatable
 
     public function empWithPlantilla($id)
     {
-        return $this->empPlantilla()->where('user_id',$id)->exists();
+        return $this->empPlantilla()->where('user_id', $id)->exists();
     }
 
     public function leaveCreditlatest()
     {
         return $this->hasOne(LeaveCredit::class)->latest();
     }
-    public function leaveCard(){
-        return $this->hasMany(LeaveCredit::class,'user_id');
+    public function leaveCard()
+    {
+        return $this->hasMany(LeaveCredit::class, 'user_id');
+    }
+
+    public function havePDS()
+    {
+        return $this->pdsPersonal()->where('user_id', Auth::user()->id)->exists();
+    }
+
+    public function application()
+    {
+        return $this->hasMany(application::class, 'user_id');
     }
 }

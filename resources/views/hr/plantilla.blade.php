@@ -4,83 +4,96 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <h2>Department</h2>
-        <div class="col-12 col-md-4">
-            @if ($edit_dep)
-                <form action="{{ route('admin.department.update', $edit_dep->id) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                @else
-                    <form action="{{ route('admin.department.store') }}" method="POST">
-                        @csrf
-            @endif
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control text-uppercase @error('name') is-invalid @enderror" name="name"
-                    id="formId1" placeholder="Department Name"
-                    @if ($edit_dep) value="{{ old('name', $edit_dep->name) }}"
-                @else
-                value="{{ old('name') }}" @endif>
-                <label for="formId1">Department Name</label>
-                @error('name')
-                    <p class="text-danger small">{{ $message }}</p>
-                @enderror
-            </div>
-            <button class="btn btn-success" type="submit">
-                @if ($edit_dep)
-                    <i class="fa fa-upload me-1" aria-hidden="true"></i> Save
-                @else
-                    <i class="fa fa-plus me-1" aria-hidden="true"></i> Add
-                @endif
-            </button>
-            </form>
-        </div>
-        <div class="col-12 col-md">
-            <div class="table-responsive" id="no-more-tables">
-                <table class="table table-hover table-striped smnall table-sm">
-                    <thead>
-                        <tr class="table-success">
-                            <th class="numeric" width="5%">ID</th>
-                            <th class="numeric">Name</th>
-                            <th class="numeric" width="5%">Edit/Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        @forelse ($all_department as $department)
-                            <tr>
-                                <td data-title="ID">{{ $department->id }}</td>
-                                <td data-title="Department">{{ $department->name }}</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('admin.department.edit', $department->id) }}"
-                                            class="btn btn-warning btn-sm"><i class="fa fa-pencil text-white"
-                                                aria-hidden="true"></i></a>
-                                        <form action="{{ route('admin.department.destroy', $department->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm rounded-0 rounded-end"><i
-                                                    class="fa-solid fa-trash-can me-1"></i> </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="9" class="text-center">No Records</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
-                    {{ $all_department->links('pagination.custom') }}
+        <div class="col-12 col-md-10">
+            <h2>Department</h2>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-4">
+                    @if ($edit_dep)
+                        <form action="{{ route('hr.department.update', $edit_dep->id) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                        @else
+                            <form action="{{ route('hr.department.store') }}" method="POST">
+                                @csrf
+                    @endif
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control text-uppercase @error('name') is-invalid @enderror"
+                            name="name" id="formId1" placeholder="Department Name"
+                            @if ($edit_dep) value="{{ old('name', $edit_dep->name) }}"
+                        @else
+                        value="{{ old('name') }}" @endif>
+                        <label for="formId1">Department Name</label>
+                        @error('name')
+                            <p class="text-danger small">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <button class="btn btn-success w-100 mb-3" type="submit">
+                        @if ($edit_dep)
+                            <i class="fa fa-upload me-1" aria-hidden="true"></i> Save
+                        @else
+                            <i class="fa fa-plus me-1" aria-hidden="true"></i> Add
+                        @endif
+                    </button>
+                    </form>
+                </div>
+                <div class="col-12 col-md">
+                    <div class="table-responsive" id="no-more-tables">
+
+                        <div class="d-md-none d-flex justify-content-center">
+                            {{ $t_department->links('pagination.custom') }}
+                        </div>
+                        <table class="table table-hover table-striped smnall table-sm">
+                            <thead>
+                                <tr class="table-success">
+                                    <th class="numeric" width="5%">ID</th>
+                                    <th class="numeric">Name</th>
+                                    <th class="numeric" width="5%">Edit/Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                @forelse ($t_department as $department)
+                                    <tr>
+                                        <td data-title="ID">{{ $department->id }}</td>
+                                        <td data-title="Department">{{ $department->name }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{ route('hr.department.edit', $department->id) }}"
+                                                    class="btn btn-warning btn-sm"><i class="fa fa-pencil text-white"
+                                                        aria-hidden="true"></i></a>
+                                                <form action="{{ route('hr.department.destroy', $department->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm rounded-0 rounded-end"><i
+                                                            class="fa-solid fa-trash-can me-1"></i> </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="9" class="text-center">No Records</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center">
+                            {{ $t_department->links('pagination.custom') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <hr>
     <div class="row justify-content-center mt-5">
-        <h2>Employee Plantilla</h2>
         <div class="col-12 col-md-10">
+            <p class="float-start h3 m-0">Employee Plantilla
+            </p>
+            <p class="float-end m-0">
+                <a href="" class="btn btn-success"><i class="fa-solid fa-print me-1"></i>Print All Plantilla</a>
+            </p>
             @if ($edit_plan)
                 <form action="{{ route('hr.plantilla.update', $edit_plan->id) }}" method="POST">
                     @csrf
@@ -89,7 +102,7 @@
                     <form action="{{ route('hr.plantilla.store') }}" method="POST">
                         @csrf
             @endif
-            <div class="row mb-3">
+            <div class="row mb-3 mt-5">
                 <div class="col-12 col-md-2">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control @error('EPno') is-invalid @enderror" name="EPno"
@@ -174,7 +187,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success" type="submit">
+            <button class="btn btn-success w-100" type="submit">
                 @if ($edit_plan)
                     <i class="fa fa-upload me-1" aria-hidden="true"></i> Save
                 @else
@@ -200,6 +213,10 @@
         </div>
         <div class="col-12 col-md-10 mt-3">
             <div class="table-responsive" id="no-more-tables">
+
+                <div class="d-md-none d-flex justify-content-center">
+                    {{ $all_plantilla->links('pagination.custom') }}
+                </div>
                 <table class="table table-hover table-striped smnall table-sm">
                     <thead>
                         <tr class="table-success">

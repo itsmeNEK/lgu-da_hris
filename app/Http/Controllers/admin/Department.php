@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\admin\Department as AdminDepartment;
 use App\Models\admin\EmployeePlantilla;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -12,10 +13,12 @@ class Department extends Controller
 {
     private $plantilla;
     private $department;
-    public function __construct(EmployeePlantilla $plantilla,AdminDepartment $department)
+    private $user;
+    public function __construct(EmployeePlantilla $plantilla,AdminDepartment $department, User $user)
     {
         $this->plantilla = $plantilla;
         $this->department = $department;
+        $this->user = $user;
     }
     /**
      * Display a listing of the resource.
@@ -82,11 +85,16 @@ class Department extends Controller
         $all_department = $this->department->paginate(10);
         $deparment = $this->department->findOrFail($id);
         $plantilla = $this->plantilla->findOrFail($id);
-        return view('admin.plantilla')
+        $all_user = $this->user
+        ->where('role', '!=', '0')
+        ->where('role', '!=', '1')
+        ->where('role', '!=', '6')->get();
+        return view('hr.plantilla')
         ->with('all_plantilla', $all_plantilla)
         ->with('all_department', $all_department)
+        ->with('all_user', $all_user)
         ->with('edit_plan', $plantilla)
-        ->with('edit_dep', null);
+        ->with('edit_dep', $deparment);
     }
 
     /**
@@ -106,7 +114,7 @@ class Department extends Controller
 
         if ($department->save()) {
             Session::flash('alert', 'success|Record has been Saved');
-            return redirect()->route('admin.plantilla.index');
+            return redirect()->route('hr.plantilla.index');
         } else {
             Session::flash('alert', 'danger|Record not Save');
             return redirect()->back();

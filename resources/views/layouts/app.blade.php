@@ -50,9 +50,10 @@
                         </li>
                         <li class="nav-item d-block d-md-none">
                             @can('isUser')
-                                <a href="/" class="nav-link">My Applications</a>
+                                <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
                             @else
-                                <a href="" class="nav-link">My Records</a>
+                                <a href="{{ route('users.files.index') }}" class="nav-link">My Files</a>
+                                <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
                             @endcan
                         </li>
                         @if (Auth::user())
@@ -85,14 +86,14 @@
                                 </li>
                                 <hr class=" d-block d-md-none">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">Dashboard</a>
+                                    <a href="{{ route('hr.dashboard.index') }}" class="nav-link">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('hr.leave.index') }}" class="nav-link">Employee Leave
                                         Credit</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">Service Record</a>
+                                    <a href="{{ route('hr.service.index') }}" class="nav-link">Service Record</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('hr.plantilla.index') }}" class="nav-link">Plantilla Management</a>
@@ -137,9 +138,9 @@
                                         class="dropdown-item">Account Settings</a>
 
                                     @can('isUser')
-                                        <a href="" class="dropdown-item">My Applications</a>
+                                        <a href="{{ route('users.application.index') }}" class="dropdown-item">My Applications</a>
                                     @else
-                                        <a href="" class="dropdown-item">My Records</a>
+                                        <a href="{{ route('users.files.index') }}" class="dropdown-item">My Records</a>
                                     @endcan
                                     <p class="dropdown-divider"></p>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -168,7 +169,6 @@
                 </div>
             </div>
         </nav>
-
         <div class="d-flex position-absolute" style="z-index:9999;right: 2%; margin-top: 1rem">
             @if (Session::has('alert'))
                 <div class="alert alert-{{ explode('|', Session::get('alert'))[0] ?? 'info' }} alert-dismissible show"
@@ -196,44 +196,56 @@
                                                 alt="" class="avatar-img mx-auto d-block">
                                         </div>
                                         <div class="list-group border-0 text-start">
-                                            @cannot('isAdmin')
-                                                <a href="{{ route('users.pds.index') }}"
-                                                    class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-address-card me-1"></i>Personal DataSheet
+                                            <a href="{{ route('users.pds.index') }}"
+                                                class="list-group-item list-group-item-action border-0">
+                                                <i class="fa-solid fa-address-card me-1"></i>Personal DataSheet
+                                            </a>
+                                            @can('isUser')
+                                                <a href="{{ route('users.application.index') }}" class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-briefcase me-1"></i>My Application
                                                 </a>
-                                                @can('isUser')
-                                                    <a href="#" class="list-group-item list-group-item-action border-0">
-                                                        <i class="fa-solid fa-briefcase me-1"></i>My Application
-                                                    </a>
-                                                @else
-                                                    <a href="#" class="list-group-item list-group-item-action border-0">
-                                                        <i class="fa-solid fa-briefcase me-1"></i>My Records
-                                                    </a>
-                                                @endcan
-                                            @endcannot
+                                            @else
+                                                <a href="{{ route('users.files.index') }}" class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-briefcase me-1"></i>My Records
+                                                </a>
+                                                <a href="{{ route('users.covid.index') }}" class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-virus-covid me-1"></i>Covid 19 Response
+                                                </a>
+                                            @endcan
                                             <a href="{{ route('users.account.edit', Auth::user()->id) }}"
                                                 class="list-group-item list-group-item-action border-0">
                                                 <i class="fa-solid fa-user-gear me-1"></i>Account Settings
                                             </a>
                                         </div>
-                                        <hr class="text-dark">
+                                        {{-- <hr class="text-dark"> --}}
+{{--
+                                        @canany(['isAdmin', 'isHead'])
+                                            <div class="list-group border-0 text-start">
+                                                <a href="#" class="list-group-item list-group-item-action border-0"><i
+                                                        class="fa-solid fa-ranking-star me-2"></i>Employee IPCR</a>
+                                            </div>
+                                        @endcanany
+                                        @can(['isAdmin','isMayor', 'isHR'])
+                                            <div class="list-group border-0 text-start">
+                                                <a href="#" class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-trophy me-2"></i>Department Head IPCR</a>
+                                            </div>
+                                        @endcan --}}
                                         @canany(['isAdmin', 'isHR'])
                                             <hr class="text-dark">
                                             <div class="list-group border-0 text-start">
                                                 <a href="#" class="list-group-item list-group-item-action border-0"><i
                                                         class="fa-solid fa-users me-2"></i>RSP</a>
-                                                <a href="{{ route('hr.pms.index') }}"
-                                                    class="list-group-item list-group-item-action border-0"><i
+                                                <a href="{{ route('hr.pms.index') }}" class="list-group-item list-group-item-action border-0"><i
                                                         class="fa-solid fa-ranking-star me-2"></i>PMS</a>
-                                                <a href="{{ route('hr.lnd.create') }}"
-                                                    class="list-group-item list-group-item-action border-0"><i
+                                                <a href="{{ route('hr.lnd.create') }}" class="list-group-item list-group-item-action border-0"><i
                                                         class="fa-solid fa-chalkboard-user me-2"></i>L&D</a>
                                                 <a href="#" class="list-group-item list-group-item-action border-0"><i
                                                         class="fa-solid fa-medal me-2"></i>R&R</a>
                                             </div>
                                             <hr class="text-dark">
                                             <div class="list-group border-0 text-start">
-                                                <a href="" class="list-group-item list-group-item-action border-0">
+                                                <a href="{{ route('hr.dashboard.index') }}" class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-gauge me-1"></i>Dashboard
                                                 </a>
                                                 <a href="{{ route('hr.leave.index') }}"
@@ -241,14 +253,15 @@
                                                     <i class="fa-solid fa-money-check-dollar me-1"></i>Employee Leave
                                                     Credit
                                                 </a>
-                                                <a href="#" class="list-group-item list-group-item-action border-0">
+                                                <a href="{{ route('hr.service.index') }}" class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-regular fa-id-card me-1"></i>Service Record
                                                 </a>
                                                 <a href="{{ route('hr.plantilla.index') }}"
                                                     class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-users me-1"></i>Plantilla Management
                                                 </a>
-                                                <a href="" class="list-group-item list-group-item-action border-0">
+                                                <a href=""
+                                                    class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-user-plus me-1"></i>Manage Applicants
                                                 </a>
                                                 <a href="{{ route('hr.publication.index') }}"
@@ -269,6 +282,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-9">
                                 <div class="card border-success">
                                     <div class="card-header bg-success text-white">@yield('title')</div>
@@ -284,7 +298,7 @@
         </main>
     </div>
     <!-- Footer -->
-    <footer class="text-center text-lg-start bg-light text-muted footer mt-auto">
+    <footer class="text-center text-lg-start bg-light text-muted footer mt-auto" style="margin-top: 200px;">
         <!-- Section: Links  -->
         <section class="">
             <div class="container text-center text-md-start mt-2">
@@ -324,7 +338,7 @@
         <!-- Section: Links  -->
 
         <!-- Copyright -->
-        <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.05);">
+        <div class="text-center p-2 bottom-0" style="background-color: rgba(0, 0, 0, 0.05);">
             © 2022 Copyright:
             <a class="text-reset fw-bold" href="#">LGU Delfin Albano</a>
         </div>

@@ -10,6 +10,7 @@
             <form action="{{ route('hr.publication.store') }}" method="POST">
                 @csrf
     @endif
+
     <div class="row justify-content-center mx-auto">
         <h3>Add New Vacancy</h3>
         <div class="col-12 col-md-10 mt-3">
@@ -54,7 +55,7 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="monthly" id="monthly"
+                        <input type="number" class="form-control" name="monthly" id="monthly"
                             placeholder="Monthly Salary"@if ($edit_pub) value="{{ $edit_pub->monthly }}"
                                 @else
                                 value="{{ old('monthly') }}" @endif>
@@ -145,7 +146,7 @@
                 </div>
             </div>
             <div class="col text-end">
-                <button type="submit" class="btn btn-outline-success">
+                <button type="submit" class="btn btn-success w-100">
                     @if ($edit_pub)
                         <i class="fa fa-upload me-1" aria-hidden="true"></i> Save
                     @else
@@ -186,9 +187,10 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('hr.publication.edit',$pub->id) }}" class="btn btn-warning btn-sm"><i
-                                                class="fa fa-pencil text-white" aria-hidden="true"></i></a>
-                                        <form action="{{ route('hr.publication.destroy',$pub->id) }}" method="POST">
+                                        <a href="{{ route('hr.publication.edit', $pub->id) }}"
+                                            class="btn btn-warning btn-sm"><i class="fa fa-pencil text-white"
+                                                aria-hidden="true"></i></a>
+                                        <form action="{{ route('hr.publication.destroy', $pub->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm rounded-0 rounded-end"><i

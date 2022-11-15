@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class CivilService extends Controller
 {
     public const LOCAL_STORAGE_FOLDER = "pdsFiles/";
+    public const LOCAL_STORAGE_FOLDER_DELETE = "/public/pdsFiles/";
     private $civilservice;
 
     public function __construct(PdsCivilservice $civilservice)
@@ -73,7 +74,7 @@ class CivilService extends Controller
         $this->civilservice->CSnumber = $request->CSnumber;
         $this->civilservice->CSDateValid = $request->CSDateValid;
         if ($request->document) {
-            $this->civilservice->document = $this->saveFile($request);
+            $this->civilservice->document = $this->saveFile($request->document);
         }
         if ($this->civilservice->save()) {
             Session::flash('alert', 'success|Record has been Saved');
@@ -144,7 +145,7 @@ class CivilService extends Controller
         $civilservice->CSDateValid = $request->CSDateValid;
         if ($request->document) {
             $this->deleteFile($civilservice->document);
-            $civilservice->document = $this->saveFile($request);
+            $civilservice->document = $this->saveFile($request->document);
         }
 
         if ($civilservice->save()) {
@@ -173,18 +174,33 @@ class CivilService extends Controller
         }
     }
 
-    public function saveFile($request)
+    public function saveFile($file)
     {
-        $filename = time().".". $request->document->extension();
 
-        $request->document->storeAs(self::LOCAL_STORAGE_FOLDER, $filename);
+        // getting original name
+        $filenameWithExt = $file->getClientOriginalName();
+
+        //Get just the file name
+        $filenameWithoutExy = pathinfo( $filenameWithExt, PATHINFO_FILENAME );
+
+        // creating new name
+        $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+
+        // getting file path
+        $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
+        while (Storage::disk('local')->exists($filename_path)) {
+            // creating new name while exist
+            $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+        }
+
+        $file->storeAs(self::LOCAL_STORAGE_FOLDER, $filename);
 
         return $filename;
     }
 
     public function deleteFile($filename)
     {
-        $filename_path = self::LOCAL_STORAGE_FOLDER . $filename;
+        $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
 
         if (Storage::disk('local')->exists($filename_path)) {
             Storage::disk('local')->delete($filename_path);

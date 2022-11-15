@@ -9,7 +9,6 @@ use App\Models\reference\hours;
 use App\Models\reference\minutes;
 use App\Models\User;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -39,17 +38,15 @@ class LeaveRecordController extends Controller
     public function index(Request $request)
     {
         if ($request->search) {
-            $users = $this->users->where('role', '!=', '1')
-            ->where('role', '!=', '6')
-            ->where('role', '!=', '0')
-            ->orwhere('first_name',$request->search)
-            ->orwhere('last_name', $request->search)
+            $users = $this->users
+            ->where('first_name','like','%'.$request->search.'%')
+            ->orwhere('last_name','like','%'.$request->search.'%')
+            ->EMP()
             ->latest()
             ->paginate(30);
         } else {
-            $users = $this->users->where('role', '!=', '1')
-            ->where('role', '!=', '6')
-            ->where('role', '!=', '0')
+            $users = $this->users
+            ->EMP()
             ->latest()
             ->paginate(30);
         }

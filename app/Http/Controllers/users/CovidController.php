@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\users\Covid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-class AccountController extends Controller
+class CovidController extends Controller
 {
-    public const LOCAL_STORAGE_FOLDER = "user_avatar/";
-    public const LOCAL_STORAGE_FOLDER_DELETE = "/public/user_avatar/";
-    private $user;
+    public const LOCAL_STORAGE_FOLDER = "Vcard/";
+    public const LOCAL_STORAGE_FOLDER_DELETE = "/public/Vcard/";
+    private $covid;
 
-    public function __construct(User $user)
+    public function __construct(Covid $covid)
     {
-        $this->user = $user;
+        $this->covid = $covid;
     }
     /**
      * Display a listing of the resource.
@@ -25,6 +26,8 @@ class AccountController extends Controller
      */
     public function index()
     {
+        $covid = Covid::where('user_id', Auth::user()->id)->first();
+        return view('users.Files.covid')->with('covid', $covid);
     }
 
     /**
@@ -45,7 +48,22 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'booster' => 'required',
+            'photo' => 'required',
+        ]);
+
+        $this->covid->user_id = Auth::user()->id;
+        $this->covid->booster = $request->booster;
+        $this->covid->photo = $this->saveFile($request->photo);
+
+        if ($this->covid->save()) {
+            Session::flash('alert', 'success|Account has been Updated');
+            return redirect()->route('users.covid.index');
+        } else {
+            Session::flash('alert', 'danger|Account not Updated');
+            return redirect()->route('users.covid.index');
+        }
     }
 
     /**
@@ -67,8 +85,7 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->user->findOrFail($id);
-        return view('users.accountsetting')->with('user', $user);
+        //
     }
 
     /**
@@ -81,38 +98,22 @@ class AccountController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
+            'booster' => 'required',
         ]);
 
-        $user = $this->user->findOrFail($id);
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
+        $covid = $this->covid->findOrFail($id);
+        $covid->booster = $request->booster;
+        if ($request->photo) {
+            $this->deleteFile($covid->photo);
+            $covid->photo = $this->saveFile($request->photo);
+        }
 
-        if ($request->password) {
-            $request->validate([
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'current_password' => ['required', 'string', 'min:8','current_password'],
-            ]);
-            if (password_verify($request->current_password, $user->password)) {
-                $user->password = bcrypt($request->password);
-            }
-        }
-        if ($request->avatar) {
-            $request->validate([
-            'avatar'=>'max:25000|mimes:jpeg,jpg,png,gif',
-            ]);
-            $this->deleteFile($user->avatar);
-            $user->avatar = $this->saveFile($request->avatar);
-        }
-        if ($user->save()) {
+        if ($covid->save()) {
             Session::flash('alert', 'success|Account has been Updated');
-            return back();
+            return redirect()->route('users.covid.index');
         } else {
             Session::flash('alert', 'danger|Account not Updated');
-            return back();
+            return redirect()->route('users.covid.index');
         }
     }
 
@@ -124,8 +125,9 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //s
     }
+
     public function saveFile($file)
     {
 
@@ -148,6 +150,7 @@ class AccountController extends Controller
         $file->storeAs(self::LOCAL_STORAGE_FOLDER, $filename);
 
         return $filename;
+
     }
 
     public function deleteFile($filename)
