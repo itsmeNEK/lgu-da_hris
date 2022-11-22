@@ -84,6 +84,14 @@ class User extends Authenticatable
     {
         return $query->where('role', '6');
     }
+    public function EducCollege()
+    {
+        return $this->hasOne(educational::class, 'user_id')->where('EDlevel','College');
+    }
+    public function EducGraduate()
+    {
+        return $this->hasOne(educational::class, 'user_id')->where('EDlevel','Graduate Studies');
+    }
 
     public function scopeNotAdmin($query)
     {
@@ -91,7 +99,7 @@ class User extends Authenticatable
     }
     public function pdsPersonal()
     {
-        return $this->hasMany(personal::class, 'user_id');
+        return $this->hasOne(personal::class, 'user_id');
     }
     public function pdsFamily()
     {
@@ -105,6 +113,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(educational::class, 'user_id');
     }
+
     public function pdsCivilService()
     {
         return $this->hasMany(CivilService::class, 'user_id');
@@ -171,5 +180,12 @@ class User extends Authenticatable
     public function application()
     {
         return $this->hasMany(application::class, 'user_id');
+    }
+
+    public function app_ranking($id)
+    {
+        $lnd = learningdevelopment::where('user_id', $id)->count();
+        $work = workexperience::where('user_id', $id)->count();
+        return $lnd + $work;
     }
 }

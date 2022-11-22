@@ -7,6 +7,7 @@ PRINT
 -plantilla
 -leave card
 
+15 per year
 
 <!--  -->
 LnD
@@ -34,8 +35,8 @@ PMS
 
 
 rsp
-- top 10 application to proceed to next phase
-- top 5 overall
-
-vaccinated or not in profile
+phase 1- top 10 application to proceed to next phase
+phase 2- top 5 overall ()
+phase 3- top 5 overall ()
+<!-- vaccinated or not in profile -->
 

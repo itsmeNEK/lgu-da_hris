@@ -23,7 +23,13 @@
                                 <td data-title="No.">{{ $app->id }}</td>
                                 <td data-title="Position title">{{ $app->publication->title }}</td>
                                 <td data-title="Assignment">{{ $app->publication->assignment }}</td>
-                                <td data-title="Assignment">{{ $app->created_at->diffForHumans() }}</td>
+                                <td data-title="Assignment">
+                                    @if ($app->created_at)
+                                        {{ $app->created_at->diffForHumans() }}
+                                    @else
+                                        {{ $app->updated_at->diffForHumans() }}
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($app->trashed())
                                         <span class="badge text-bg-danger">Cancelled</span>
@@ -53,7 +59,7 @@
                                                 <button type="submit"
                                                     class="btn btn-danger fw-bold btn-sm rounded-0 rounded-end">Delete</button>
                                             </form>
-                                        @else
+                                        @elseif($app->status == 1)
                                             <form action="{{ route('users.application.destroy', $app->id) }}"
                                                 method="POST">
                                                 @csrf

@@ -41,21 +41,23 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto d-flex">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link">Publication</a>
-                        </li>
-                        <hr class=" d-block d-md-none">
-                        <li class="nav-item d-block d-md-none">
-                            <a href="{{ route('users.pds.index') }}" class="nav-link">Personal Data Sheet</a>
-                        </li>
-                        <li class="nav-item d-block d-md-none">
-                            @can('isUser')
-                                <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
-                            @else
-                                <a href="{{ route('users.files.index') }}" class="nav-link">My Files</a>
-                                <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
-                            @endcan
-                        </li>
+                        @cannot('isSuperAdmin')
+                            <li class="nav-item">
+                                <a href="/" class="nav-link">Publication</a>
+                            </li>
+                            <hr class=" d-block d-md-none">
+                            <li class="nav-item d-block d-md-none">
+                                <a href="{{ route('users.pds.index') }}" class="nav-link">Personal Data Sheet</a>
+                            </li>
+                            <li class="nav-item d-block d-md-none">
+                                @can('isUser')
+                                    <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
+                                @else
+                                    <a href="{{ route('users.files.index') }}" class="nav-link">My Files</a>
+                                    <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
+                                @endcan
+                            </li>
+                        @endcannot
                         @if (Auth::user())
                             <li class="nav-item d-block d-md-none">
                                 <a href="{{ route('users.account.edit', Auth::user()->id) }}" class="nav-link">Account
@@ -72,32 +74,34 @@
                                 </li>
                             @endcanany --}}
                             @canany(['isAdmin', 'isHR'])
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">RSP</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('hr.pms.index') }}" class="nav-link">PMS</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('hr.lnd.create') }}" class="nav-link">L&D</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">R&R</a>
-                                </li>
-                                <hr class=" d-block d-md-none">
-                                <li class="nav-item">
-                                    <a href="{{ route('hr.dashboard.index') }}" class="nav-link">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('hr.leave.index') }}" class="nav-link">Employee Leave
-                                        Credit</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('hr.service.index') }}" class="nav-link">Service Record</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('hr.plantilla.index') }}" class="nav-link">Plantilla Management</a>
-                                </li>
+                                @cannot('isSuperAdmin')
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">RSP</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('hr.pms.index') }}" class="nav-link">PMS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('hr.lnd.create') }}" class="nav-link">L&D</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">R&R</a>
+                                    </li>
+                                    <hr class=" d-block d-md-none">
+                                    <li class="nav-item">
+                                        <a href="{{ route('hr.dashboard.index') }}" class="nav-link">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('hr.leave.index') }}" class="nav-link">Employee Leave
+                                            Credit</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('hr.service.index') }}" class="nav-link">Service Record</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('hr.plantilla.index') }}" class="nav-link">Plantilla Management</a>
+                                    </li>
+                                @endcannot
                                 @can('isAdmin')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.user.index') }}" class="nav-link">User Management</a>
@@ -138,7 +142,8 @@
                                         class="dropdown-item">Account Settings</a>
 
                                     @can('isUser')
-                                        <a href="{{ route('users.application.index') }}" class="dropdown-item">My Applications</a>
+                                        <a href="{{ route('users.application.index') }}" class="dropdown-item">My
+                                            Applications</a>
                                     @else
                                         <a href="{{ route('users.files.index') }}" class="dropdown-item">My Records</a>
                                     @endcan
@@ -195,81 +200,143 @@
                                             <img src="{{ asset('storage/user_avatar/' . Auth::user()->avatar) }}"
                                                 alt="" class="avatar-img mx-auto d-block">
                                         </div>
-                                        <div class="list-group border-0 text-start">
-                                            <a href="{{ route('users.pds.index') }}"
-                                                class="list-group-item list-group-item-action border-0">
-                                                <i class="fa-solid fa-address-card me-1"></i>Personal DataSheet
-                                            </a>
-                                            @can('isUser')
-                                                <a href="{{ route('users.application.index') }}" class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-briefcase me-1"></i>My Application
+                                        @cannot('isSuperAdmin')
+                                            <div class="list-group border-0 text-start">
+                                                <a href="{{ route('users.pds.index') }}"
+                                                    class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-address-card me-1"></i>Personal DataSheet
                                                 </a>
-                                            @else
-                                                <a href="{{ route('users.files.index') }}" class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-briefcase me-1"></i>My Records
-                                                </a>
-                                                <a href="{{ route('users.covid.index') }}" class="list-group-item list-group-item-action border-0">
+                                                <a href="{{ route('users.covid.index') }}"
+                                                    class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-virus-covid me-1"></i>Covid 19 Response
                                                 </a>
-                                            @endcan
-                                            <a href="{{ route('users.account.edit', Auth::user()->id) }}"
-                                                class="list-group-item list-group-item-action border-0">
-                                                <i class="fa-solid fa-user-gear me-1"></i>Account Settings
-                                            </a>
-                                        </div>
-                                        {{-- <hr class="text-dark"> --}}
-{{--
+                                                @can('isUser')
+                                                    <a href="{{ route('users.application.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-briefcase me-1"></i>My Application
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('users.files.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-briefcase me-1"></i>My Records
+                                                    </a>
+                                                    <a href=""
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-certificate me-2"></i>My Certificates
+                                                    </a>
+                                                @endcan
+                                                <a href="{{ route('users.account.edit', Auth::user()->id) }}"
+                                                    class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-user-gear me-1"></i>Account Settings
+                                                </a>
+                                            </div>
+                                            {{-- <hr class="text-dark"> --}}
+                                            {{--
                                         @canany(['isAdmin', 'isHead'])
                                             <div class="list-group border-0 text-start">
                                                 <a href="#" class="list-group-item list-group-item-action border-0"><i
                                                         class="fa-solid fa-ranking-star me-2"></i>Employee IPCR</a>
                                             </div>
                                         @endcanany
-                                        @can(['isAdmin','isMayor', 'isHR'])
+                                        @can(['isAdmin', 'isMayor', 'isHR'])
                                             <div class="list-group border-0 text-start">
                                                 <a href="#" class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-trophy me-2"></i>Department Head IPCR</a>
                                             </div>
                                         @endcan --}}
-                                        @canany(['isAdmin', 'isHR'])
-                                            <hr class="text-dark">
-                                            <div class="list-group border-0 text-start">
-                                                <a href="#" class="list-group-item list-group-item-action border-0"><i
-                                                        class="fa-solid fa-users me-2"></i>RSP</a>
-                                                <a href="{{ route('hr.pms.index') }}" class="list-group-item list-group-item-action border-0"><i
-                                                        class="fa-solid fa-ranking-star me-2"></i>PMS</a>
-                                                <a href="{{ route('hr.lnd.create') }}" class="list-group-item list-group-item-action border-0"><i
-                                                        class="fa-solid fa-chalkboard-user me-2"></i>L&D</a>
-                                                <a href="#" class="list-group-item list-group-item-action border-0"><i
-                                                        class="fa-solid fa-medal me-2"></i>R&R</a>
-                                            </div>
-                                            <hr class="text-dark">
-                                            <div class="list-group border-0 text-start">
-                                                <a href="{{ route('hr.dashboard.index') }}" class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-gauge me-1"></i>Dashboard
-                                                </a>
-                                                <a href="{{ route('hr.leave.index') }}"
-                                                    class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-money-check-dollar me-1"></i>Employee Leave
-                                                    Credit
-                                                </a>
-                                                <a href="{{ route('hr.service.index') }}" class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-regular fa-id-card me-1"></i>Service Record
-                                                </a>
-                                                <a href="{{ route('hr.plantilla.index') }}"
-                                                    class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-users me-1"></i>Plantilla Management
-                                                </a>
-                                                <a href=""
-                                                    class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-user-plus me-1"></i>Manage Applicants
-                                                </a>
-                                                <a href="{{ route('hr.publication.index') }}"
-                                                    class="list-group-item list-group-item-action border-0">
-                                                    <i class="fa-solid fa-upload me-1"></i>Publication
-                                                </a>
-                                            </div>
-                                        @endcanany
+                                            @canany(['isAdmin', 'isHR'])
+                                                <hr class="text-dark">
+                                                <div class="list-group border-0 text-start">
+                                                    {{-- RSP --}}
+                                                    <a href="#rsp" class="list-group-item list-group-item-action border-0 "
+                                                        data-bs-toggle="collapse">
+                                                        <span class="text-start"><i class="fa-solid fa-users me-2"></i>RSP</span>
+                                                        <span class="float-end"><i class="fa-solid fa-caret-down"></i></span>
+                                                    </a>
+                                                    <div class="collapse ms-2" id="rsp">
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="{{ route('hr.manage_applicants.index') }}"><i class="fa-solid fa-user-plus me-1"></i>Applicants</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#">Interviewing</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#">Selection</a>
+                                                    </div>
+                                                    {{-- PMS --}}
+                                                    <a href="#pms" class="list-group-item list-group-item-action border-0"
+                                                        data-bs-toggle="collapse">
+                                                        <span class="text-start"><i
+                                                                class="fa-solid fa-ranking-star me-2"></i>PMS</span>
+                                                        <span class="float-end"><i class="fa-solid fa-caret-down"></i></span>
+                                                    </a>
+                                                    <div class="collapse ms-2" id="pms">
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="{{ route('hr.pms.index') }}"><i
+                                                                class="fa-solid fa-plus me-2"></i>Add PMS</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#"><i
+                                                                class="fa-solid fa-chart-simple me-2"></i>Department</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#"><i class="fa-solid fa-signal me-2"></i>Employee</a>
+                                                    </div>
+                                                    {{-- lnd --}}
+                                                    <a href="#lnd" class="list-group-item list-group-item-action border-0"
+                                                        data-bs-toggle="collapse">
+                                                        <span class="text-start"><i
+                                                                class="fa-solid fa-chalkboard-user me-2"></i>L&D</span>
+                                                        <span class="float-end"><i class="fa-solid fa-caret-down"></i></span>
+                                                    </a>
+                                                    <div class="collapse ms-2" id="lnd">
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="{{ route('hr.lnd.create') }}"><i class="fa-solid fa-globe me-2"></i>All</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#"><i class="fa-solid fa-person-dots-from-line me-2"></i>Traning</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#"><i class="fa-solid fa-check-double me-2"></i>Assessment</a>
+                                                    </div>
+                                                    {{-- R n R --}}
+                                                    <a href="#rr" class="list-group-item list-group-item-action border-0"
+                                                        data-bs-toggle="collapse">
+                                                        <span class="text-start"><i class="fa-solid fa-medal me-2"></i>R&R</span>
+                                                        <span class="float-end"><i class="fa-solid fa-caret-down"></i></span>
+                                                    </a>
+                                                    <div class="collapse ms-2" id="rr">
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href=""><i class="fa-solid fa-square-poll-vertical me-2"></i>Survey</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#"><i class="fa-solid fa-certificate me-2"></i>Certificate</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                            href="#"><i class="fa-solid fa-user-tag me-2"></i>loyalty award</a>
+                                                    </div>
+                                                </div>
+                                                <hr class="text-dark">
+                                                <div class="list-group border-0 text-start">
+                                                    <a href="{{ route('hr.dashboard.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-gauge me-1"></i>Dashboard
+                                                    </a>
+                                                    <a href="{{ route('hr.leave.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-money-check-dollar me-1"></i>Employee Leave
+                                                        Credit
+                                                    </a>
+                                                    <a href="{{ route('hr.service.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-regular fa-id-card me-1"></i>Service Record
+                                                    </a>
+                                                    <a href="{{ route('hr.plantilla.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-users me-1"></i>Plantilla Management
+                                                    </a>
+                                                    {{-- <a href="" class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-user-plus me-1"></i>Manage Applicants
+                                                    </a> --}}
+                                                    <a href="{{ route('hr.publication.index') }}"
+                                                        class="list-group-item list-group-item-action border-0">
+                                                        <i class="fa-solid fa-upload me-1"></i>Publication
+                                                    </a>
+                                                </div>
+                                            @endcanany
+                                        @endcannot
                                         @can('isAdmin')
                                             <hr class="text-dark">
                                             <div class="list-group border-0 text-start">
@@ -351,6 +418,7 @@
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @yield('customJS')
+    <script src="{{ asset('storage/js/modal.js') }}"></script>
 </body>
 
 </html>

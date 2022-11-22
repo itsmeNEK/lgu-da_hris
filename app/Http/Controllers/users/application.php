@@ -28,8 +28,8 @@ class application extends Controller
      */
     public function index()
     {
-        $all_application = $this->application->where('user_id',Auth::user()->id)->withTrashed()->paginate(5);
-        return view('users.application.my-application')->with('all_application',$all_application);
+        $all_application = $this->application->where('user_id', Auth::user()->id)->withTrashed()->paginate(5);
+        return view('users.application.my-application')->with('all_application', $all_application);
     }
 
     /**
@@ -52,14 +52,20 @@ class application extends Controller
     {
         $request->validate([
             'tor' => 'required|max:25000|mimes:pdf',
-            'eligibility' => 'required|max:25000|mimes:pdf',
         ]);
 
         $this->application->user_id = Auth::user()->id;
         $this->application->pub_id = $id;
-        $this->application->eligibility = $this->saveFile($request->eligibility);
         $this->application->tor = $this->saveFile($request->tor);
 
+        if ($request->eligibility) {
+            $request->validate([
+
+                'eligibility' => 'required|max:25000|mimes:pdf',
+        ]);
+
+            $this->application->eligibility = $this->saveFile($request->eligibility);
+        }
         if ($request->residency) {
             $request->validate([
             'residency' => 'required|max:25000|mimes:pdf',
@@ -103,9 +109,8 @@ class application extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,$app_id)
+    public function edit($id, $app_id)
     {
-
         $publication = $this->publication->findOrFail($id);
         $edit_app = $this->application->findOrFail($app_id);
         return view('users.application.application-form')
@@ -122,9 +127,8 @@ class application extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->residency){
-
-        }else{
+        if ($request->residency) {
+        } else {
             return redirect()->route('users.application.index');
         }
     }
@@ -137,7 +141,6 @@ class application extends Controller
      */
     public function destroy($id)
     {
-
         if ($this->application->destroy($id)) {
             Session::flash('alert', 'success|Application has been Canceled');
             return redirect()->route('users.application.index');
@@ -150,7 +153,6 @@ class application extends Controller
 
     public function delete($id)
     {
-
         if ($this->application->destroy($id)) {
             Session::flash('alert', 'success|Application has been Deleted');
             return redirect()->route('users.application.index');
@@ -177,7 +179,7 @@ class application extends Controller
         $filenameWithExt = $file->getClientOriginalName();
 
         //Get just the file name
-        $filenameWithoutExy = pathinfo( $filenameWithExt, PATHINFO_FILENAME );
+        $filenameWithoutExy = pathinfo($filenameWithExt, PATHINFO_FILENAME);
 
         // creating new name
         $filename = $filenameWithoutExy."-".time()."-".Auth::user()->id.".". $file->extension();
@@ -187,6 +189,7 @@ class application extends Controller
         while (Storage::disk('local')->exists($filename_path)) {
             // creating new name while exist
             $filename = $filenameWithoutExy."-".time()."-".Auth::user()->id.".". $file->extension();
+            $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
         }
 
         $file->storeAs(self::LOCAL_STORAGE_FOLDER, $filename);

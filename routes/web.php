@@ -4,8 +4,11 @@ use App\Http\Controllers\admin\Department;
 use App\Http\Controllers\admin\PlantillaController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\hr\applicantController;
 use App\Http\Controllers\hr\dashboard;
 use App\Http\Controllers\hr\LeaveRecordController;
+use App\Http\Controllers\hr\ManageApplicantsController;
+use App\Http\Controllers\hr\pdsController;
 use App\Http\Controllers\hr\PublicationController;
 use App\Http\Controllers\hr\ServiceRecord;
 use App\Http\Controllers\ipcrController;
@@ -18,6 +21,7 @@ use App\Http\Controllers\users\pds\Educational;
 use App\Http\Controllers\users\pds\Family;
 use App\Http\Controllers\users\pds\FamilyC;
 use App\Http\Controllers\users\pds\LearningDevelopment;
+use App\Http\Controllers\users\pds\OtherController;
 use App\Http\Controllers\users\pds\OtherInformation;
 use App\Http\Controllers\users\pds\Personal;
 use App\Http\Controllers\users\pds\voluntaryWork;
@@ -53,6 +57,7 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5'], function (
             Route::resource('/voluntarywork', voluntaryWork::class);
             Route::resource('/learningdevelopment', LearningDevelopment::class);
             Route::resource('/otherinformation', OtherInformation::class);
+            Route::resource('/other', OtherController::class);
         });
         Route::resource('/account', AccountController::class);
         Route::resource('/files', files::class);
@@ -76,6 +81,8 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5'], function (
         Route::resource('/lnd', LearningDevelopment::class);
         Route::resource('/service', ServiceRecord::class);
         Route::resource('/dashboard', dashboard::class);
+        Route::resource('/manage_applicants', ManageApplicantsController::class);
+        Route::resource('/applicant', applicantController::class);
     });
     #admin
     Route::group(['prefix'=> 'admin','as'=>'admin.','middleware'=>'role:0'], function () {

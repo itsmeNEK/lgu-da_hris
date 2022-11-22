@@ -19,7 +19,7 @@ class CreateApplicationsTable extends Migration
             $table->unsignedBigInteger('pub_id');
             $table->string('residency')->nullable();
             $table->string('rating')->nullable();
-            $table->string('eligibility');
+            $table->string('eligibility')->nullable();
             $table->string('tor');
             $table->string('status')->default(1)->comment('1:pending 2:reject 0:accepted');
             $table->timestamps();

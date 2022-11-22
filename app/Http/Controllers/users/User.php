@@ -13,6 +13,7 @@ use App\Models\pds\personal;
 use App\Models\pds\voluntarywork;
 use App\Models\pds\workexperience;
 use App\Models\User as ModelsUser;
+use App\Models\users\others;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,11 @@ class User extends Controller
     {
         $user = $this->user->findOrFail(Auth::user()->id);
         $progress = $this->pdsProgress();
-        return view('users.PDS.index')->with('user', $user)->with('progress', $progress);
+        if (Auth::user()->id ==1) {
+            return redirect()->route('admin.user.index');
+        } else {
+            return view('users.PDS.index')->with('user', $user)->with('progress', $progress);
+        }
     }
 
     public function pdsProgress()
@@ -39,32 +44,37 @@ class User extends Controller
             $progress += 1;
         }
         if (family::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 2;
         }
         if (familyC::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 3;
         }
         if (educational::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 4;
         }
         if (civilservice::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 5;
         }
         if (workexperience::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 6;
         }
         if (voluntarywork::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 7;
         }
         if (learningdevelopment::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 8;
         }
         if (otherinformation::where('user_id', Auth::user()->id)->exists()) {
-            $progress += 1;
+            $progress += 9;
         }
-        $progress = ($progress / 9)*100;
+        if (others::where('user_id', Auth::user()->id)->exists()) {
+            $progress += 10;
+        }
+        $progress = ($progress / 55)*100;
         return round($progress, 2);
     }
+
+
     public function reset($id)
     {
         $user = $this->user->findOrFail($id);

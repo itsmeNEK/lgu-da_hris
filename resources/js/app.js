@@ -1,15 +1,21 @@
 
 require('./bootstrap');
 
-// window.Vue = require('vue').default;
+window.Vue = require('vue').default;
+import PortalVue from 'portal-vue';
 
-// import Vue from 'vue';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
-// Vue.component('example-component', require('./components/hr/plantilla.vue').default);
+Vue.use(PortalVue);
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
-// // pagination
+Vue.component('pds-component', require('./views/pds.vue').default);
+
+
+// pagination
 // Vue.component('pagination', require('laravel-vue-pagination'));
 
-// const app = new Vue({
-//     el: '#app',
-// });
+const app = new Vue({
+    el: '#app',
+});

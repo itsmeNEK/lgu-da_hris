@@ -183,6 +183,7 @@ class VoluntaryWork extends Controller
         while (Storage::disk('local')->exists($filename_path)) {
             // creating new name while exist
             $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+            $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
         }
 
         $file->storeAs(self::LOCAL_STORAGE_FOLDER, $filename);

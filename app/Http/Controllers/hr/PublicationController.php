@@ -5,15 +5,18 @@ namespace App\Http\Controllers\hr;
 use App\Http\Controllers\Controller;
 use App\Models\hr\Publication;
 use Illuminate\Http\Request;
+use App\Models\admin\Department;
 use Illuminate\Support\Facades\Session;
 
 class PublicationController extends Controller
 {
     private $publication;
+    private $department;
 
-    public function __construct(Publication $publication)
+    public function __construct(Publication $publication, Department $department)
     {
         $this->publication = $publication;
+        $this->department = $department;
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +25,12 @@ class PublicationController extends Controller
      */
     public function index()
     {
+        $all_department = $this->department->get();
         $publication = $this->publication->paginate(10);
-        return view('hr.publication')->with('publication',$publication)->with('edit_pub', null);
+        return view('hr.publication')
+        ->with('all_department',$all_department)
+        ->with('publication',$publication)
+        ->with('edit_pub', null);
     }
 
     /**

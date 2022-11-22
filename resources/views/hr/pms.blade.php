@@ -3,7 +3,7 @@
 @section('title', 'Performance Management System')
 @section('content')
     <div class="row justify-content-center">
-        <h3>Performance Management System</h3>
+        <h3>Add PMS</h3>
         <div class="col-12 col-md-10 mt-3">
             <form action="{{ route('hr.pms.store') }}" method="POST">
                 @csrf

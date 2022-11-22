@@ -84,7 +84,7 @@
                                 <p class="text-danger small">{{ $message }}</p>
                             @enderror
                             <div class="text-muted small" id="eligibility_info">Upload in here your Certificate of
-                                Eligibility,Rating,License.<p class="text-danger">Note! Required. (PDF only)</p>
+                                Eligibility,Rating,License.<p class="text-secondary">Note!Not Required. (PDF only)</p>
                             </div>
                             @if ($edit_app)
                                 <a class="btn btn-success btn-sm"
@@ -113,22 +113,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col text-end">
-                    <button type="submit" class="btn btn-success w-100">
-                        @if ($edit_app)
-                            <i class="fa fa-upload me-1" aria-hidden="true"></i> Update
-                        @else
-                            <i class="fa fa-upload me-1" aria-hidden="true"></i> Apply
-                        @endif
+                @if ($edit_app)
+                    @if ($edit_app->status === 1)
+                        <div class="col text-end">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fa fa-upload me-1" aria-hidden="true"></i> Update
+                    @endif
                     </button>
-                </div>
             </div>
-        </div>
-        </form>
-    @else
-        <div class="container my-5">
-            <p class="text-center display-6">Please Kindly fill out first your PDS. <br><a
-                    href="{{ route('users.pds.index') }}" class="text-success">Click here.</a></p>
-        </div>
+        @else
+            <div class="col text-end">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="fa fa-upload me-1" aria-hidden="true"></i> Apply
+                </button>
+            </div>
+    @endif
+    </div>
+    </div>
+    </form>
+@else
+    <div class="container my-5">
+        <p class="text-center display-6">Please Kindly fill out first your PDS. <br><a
+                href="{{ route('users.pds.index') }}" class="text-success">Click here.</a></p>
+    </div>
     @endif
 @endsection
