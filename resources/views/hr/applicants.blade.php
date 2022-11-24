@@ -31,11 +31,12 @@
                     </form>
                 </div>
             </div>
+
             <div class="table-responsive" id="no-more-tables">
                 <table class="table table-hover table-striped smnall table-sm text-center">
                     <thead>
                         <tr class="table-success">
-                            <th class="numeric" width="10%">#</th>
+                            <th class="numeric" width="10%"></th>
                             <th class="numeric" >Applicant Name</th>
                             <th class="numeric" >Position</th>
                             <th class="numeric" width="20%"></th>

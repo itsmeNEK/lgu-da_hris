@@ -21,13 +21,23 @@
     <link href="{{ asset('storage/css/sidebar.css') }}" rel="stylesheet">
     <link href="{{ asset('storage/css/table.css') }}" rel="stylesheet">
     @yield('customCSS')
+    @yield('head1')
+    @yield('head2')
+    @yield('head3')
+    @yield('head4')
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+    </style>
+
 </head>
 
 <body class="d-flex flex-column h-100 bg-white">
     <div id="app">
-        <nav class="navbar navbar-expand-lg bg-light navbar-light fw-bold shadow-lg">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light fw-bold shadow-lg px-5">
+            {{-- <div class="container"> --}}
+                <a class="navbar-brand d-inline-block text-truncate" href="{{ url('/') }}">
                     <img src="{{ asset('images/DA-logo.png') }}" width="40" height="35"
                         class="d-inline-block align-text-middle">
                     {{ config('app.name') }}
@@ -172,7 +182,7 @@
                         @endguest
                     </ul>
                 </div>
-            </div>
+            {{-- </div> --}}
         </nav>
         <div class="d-flex position-absolute" style="z-index:9999;right: 2%; margin-top: 1rem">
             @if (Session::has('alert'))
@@ -191,9 +201,9 @@
                 @if (Route::current()->getName() === 'publication')
                     @yield('content')
                 @else
-                    <div class="container">
+                    <div>
                         <div class="row justify-content-center">
-                            <div class="col-lg-3 d-none d-lg-block">
+                            <div class="col-lg-2 d-none d-lg-block">
                                 <div class="card">
                                     <div class="">
                                         <div class="card-header avatar-bg">
@@ -220,8 +230,7 @@
                                                         class="list-group-item list-group-item-action border-0">
                                                         <i class="fa-solid fa-briefcase me-1"></i>My Records
                                                     </a>
-                                                    <a href=""
-                                                        class="list-group-item list-group-item-action border-0">
+                                                    <a href="" class="list-group-item list-group-item-action border-0">
                                                         <i class="fa-solid fa-certificate me-2"></i>My Certificates
                                                     </a>
                                                 @endcan
@@ -255,11 +264,14 @@
                                                     </a>
                                                     <div class="collapse ms-2" id="rsp">
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="{{ route('hr.manage_applicants.index') }}"><i class="fa-solid fa-user-plus me-1"></i>Applicants</a>
+                                                            href="{{ route('hr.manage_applicants.index') }}"><i
+                                                                class="fa-solid fa-user-plus me-1"></i>Applicants</a>
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="#">Interviewing</a>
+                                                            href="#"><i
+                                                                class="fa-solid fa-person-circle-question me-2"></i>Interviewing</a>
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="#">Selection</a>
+                                                            href="#"><i
+                                                                class="fa-solid fa-arrow-pointer me-2"></i>Selection</a>
                                                     </div>
                                                     {{-- PMS --}}
                                                     <a href="#pms" class="list-group-item list-group-item-action border-0"
@@ -287,11 +299,14 @@
                                                     </a>
                                                     <div class="collapse ms-2" id="lnd">
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="{{ route('hr.lnd.create') }}"><i class="fa-solid fa-globe me-2"></i>All</a>
+                                                            href="{{ route('hr.lnd.create') }}"><i
+                                                                class="fa-solid fa-globe me-2"></i>All</a>
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="#"><i class="fa-solid fa-person-dots-from-line me-2"></i>Traning</a>
+                                                            href="#"><i
+                                                                class="fa-solid fa-person-dots-from-line me-2"></i>Traning</a>
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="#"><i class="fa-solid fa-check-double me-2"></i>Assessment</a>
+                                                            href="#"><i
+                                                                class="fa-solid fa-check-double me-2"></i>Assessment</a>
                                                     </div>
                                                     {{-- R n R --}}
                                                     <a href="#rr" class="list-group-item list-group-item-action border-0"
@@ -301,11 +316,14 @@
                                                     </a>
                                                     <div class="collapse ms-2" id="rr">
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href=""><i class="fa-solid fa-square-poll-vertical me-2"></i>Survey</a>
+                                                            href=""><i
+                                                                class="fa-solid fa-square-poll-vertical me-2"></i>Survey</a>
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="#"><i class="fa-solid fa-certificate me-2"></i>Certificate</a>
+                                                            href="#"><i
+                                                                class="fa-solid fa-certificate me-2"></i>Certificate</a>
                                                         <a class="list-group-item list-group-item-action border-0"
-                                                            href="#"><i class="fa-solid fa-user-tag me-2"></i>loyalty award</a>
+                                                            href="#"><i class="fa-solid fa-user-tag me-2"></i>loyalty
+                                                            award</a>
                                                     </div>
                                                 </div>
                                                 <hr class="text-dark">

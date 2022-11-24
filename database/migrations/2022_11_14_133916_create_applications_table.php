@@ -21,7 +21,7 @@ class CreateApplicationsTable extends Migration
             $table->string('rating')->nullable();
             $table->string('eligibility')->nullable();
             $table->string('tor');
-            $table->string('status')->default(1)->comment('1:pending 2:reject 0:accepted');
+            $table->string('status')->default(1)->comment('1:applied 2:interview 3:selection 0:accepted 4:reject');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -89,7 +89,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return User::with('profile')->latest()->first();
     }
 
     /**
@@ -137,7 +137,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo "true $id";
     }
 
     /**
