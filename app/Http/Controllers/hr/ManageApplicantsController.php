@@ -132,8 +132,6 @@ class ManageApplicantsController extends Controller
      */
     public function show($id)
     {
-        $user = $this->user->findOrFail($id);
-        return view('hr.applicantInfo')->with('user', $user);
     }
 
     /**

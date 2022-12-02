@@ -5,6 +5,7 @@ namespace App\Http\Controllers\users;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -136,13 +137,13 @@ class AccountController extends Controller
         $filenameWithoutExy = pathinfo( $filenameWithExt, PATHINFO_FILENAME );
 
         // creating new name
-        $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+        $filename = $filenameWithoutExy."-".time()."-".Auth::user()->id.".". $file->extension();
 
         // getting file path
         $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
         while (Storage::disk('local')->exists($filename_path)) {
             // creating new name while exist
-            $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+            $filename = $filenameWithoutExy."-".time()."-".Auth::user()->id.".". $file->extension();
 
             $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
         }

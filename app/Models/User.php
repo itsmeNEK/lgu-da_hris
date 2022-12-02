@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\users\pds\CivilService;
 use App\Models\admin\EmployeePlantilla;
 use App\Models\hr\LeaveCredit;
+use App\Models\pds\civilservice;
 use App\Models\pds\educational;
 use App\Models\pds\family;
 use App\Models\pds\familyC;
@@ -14,6 +14,9 @@ use App\Models\pds\personal;
 use App\Models\pds\voluntarywork;
 use App\Models\pds\workexperience;
 use App\Models\users\application;
+use App\Models\users\Covid;
+use App\Models\users\others;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,6 +30,7 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use SoftDeletes;
+    use CanResetPassword;
 
     public const ADMIN_ROLE_ID = 0;
     public const USER_ROLE_ID = 1;
@@ -103,7 +107,7 @@ class User extends Authenticatable
     }
     public function pdsFamily()
     {
-        return $this->hasMany(family::class, 'user_id');
+        return $this->hasOne(family::class, 'user_id');
     }
     public function pdsFamilyC()
     {
@@ -116,7 +120,7 @@ class User extends Authenticatable
 
     public function pdsCivilService()
     {
-        return $this->hasMany(CivilService::class, 'user_id');
+        return $this->hasMany(civilservice::class, 'user_id');
     }
     public function pdsWorkExperience()
     {
@@ -133,6 +137,10 @@ class User extends Authenticatable
     public function pdsOtherInformation()
     {
         return $this->hasMany(otherinformation::class, 'user_id');
+    }
+    public function pdsOther()
+    {
+        return $this->hasOne(others::class, 'user_id');
     }
 
     public function isAdmin()
@@ -156,6 +164,10 @@ class User extends Authenticatable
     public function empPlantilla()
     {
         return $this->hasOne(EmployeePlantilla::class);
+    }
+    public function userCovid()
+    {
+        return $this->hasOne(Covid::class,'user_id');
     }
 
     public function empWithPlantilla($id)

@@ -59,7 +59,7 @@ class applicantController extends Controller
     public function show($id)
     {
         $app = $this->application->findOrFail($id);
-        return view('hr.applicantInfo')
+        return view('hr.applicant.applicantInfo')
         ->with('application',$app)
         ;
     }

@@ -31,13 +31,13 @@
 @endsection
 @section('content')
     <div class="row justify-content-center">
-        <h3>Applicant for <strong class="text-decoration-underline">{{ $application->publication->title }}</strong></h3>
+        <h4 class="h5">Applicant for <strong class="text-decoration-underline">{{ $application->publication->title }}</strong></h4>
         <div class="row my-3">
-            <div class="col-5 text-center">
+            <div class="col-12 col-md-2 text-center">
                 <img src="{{ asset('/storage/user_avatar/' . $application->user->avatar) }}"
                     class="rounded-circle applicant-img img-thumbnail" alt="{{ $application->user->avatar }}">
             </div>
-            <div class="col">
+            <div class="col-12 col-md">
                 <p class="h2">{{ $application->user->first_name . ' ' . $application->user->last_name }}</p>
                 <p class="mb-0">
                     @if ($application->user->pdsPersonal)
@@ -58,84 +58,76 @@
                     @endif
                 </p>
             </div>
+            <div class="col-12 col-md-2">
+                @if ($application->user->userCovid)
+                    <div class="row mb-2">
+                        <div class="col">
+                            Vaccination Status:
+                            <strong>
+                                @if ($application->user->userCovid->booster > 2)
+                                    Booster {{ $application->user->userCovid->booster - 2 }}
+                                @else
+                                    Dose {{ $application->user->userCovid->booster }}
+                                @endif
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <a class="btn btn-success w-100" href="/storage/Vcard/{{ $application->user->userCovid->photo }}"
+                                target="_blank"><i class="fa-solid fa-eye me-2"></i>View Vaccination Card</a>
+                        </div>
+                    </div>
+                @endif
+                <div class="row mb-2">
+                    <div class="col">
+                        <a target="_blank" href="{{ route('users.pds.print', $application->user->id) }}"
+                            class="btn btn-outline-success w-100"><i class="fa-solid fa-eye me-2"></i>View PDS</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <hr>
 
         <input type="hidden" id="userID" value="{{ $application->user->id }}">
         <div>
             <ul class="nav nav-pills nav-justified mb-3 border rounded p-2" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pds-tab" data-bs-toggle="pill" data-bs-target="#pds"
-                        type="button">PDS</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="EI-tab" data-bs-toggle="pill" data-bs-target="#EI"
+                <li class="nav-item active" role="presentation">
+                    <button class="nav-link active" id="EI-tab" data-bs-toggle="pill" data-bs-target="#EI"
                         type="button">Exam/Interview</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="others-tab" data-bs-toggle="pill" data-bs-target="#others"
-                        type="button">Others</button>
+                        type="button">Files</button>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active justify-content-center" id="pds" role="tabpanel">
-
-                    <nav>
-                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-page1" type="button"
-                                role="tab">Page 1</button>
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-page2" type="button"
-                                role="tab">Page 2</button>
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-page3" type="button"
-                                role="tab">Page 3</button>
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-page4" type="button"
-                                role="tab">Page 4</button>
-                        </div>
-                    </nav>
-
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active p-2" id="nav-page1">
-
-                            <p class="text-end">
-                                <button class="btn btn-outline-success" id="print_1">Print</button>
-                            </p>
-                            @include('hr.pds.page1')
-                        </div>
-                        <div class="tab-pane fade p-2" id="nav-page2">
-                            @include('hr.pds.page2')
-                        </div>
-                        <div class="tab-pane fade p-2" id="nav-page3">
-                            @include('hr.pds.page3')
-                        </div>
-                        <div class="tab-pane fade p-2" id="nav-page4">
-                            @include('hr.pds.page4')
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="tab-pane fade" id="EI" role="tabpanel">
-                    dsadsdasd
+                <div class="tab-pane fade show active" id="EI" role="tabpanel">
+                    @include('hr.applicant.ExamInterview')
                 </div>
                 <div class="tab-pane fade" id="others" role="tabpanel">
-                    adsadas
+                    @include('hr.applicant.otherFIles')
                 </div>
             </div>
 
         </div>
     @section('customJS')
         <script>
-            $("#print_1").click(printPage1);
+            // $("#print_1").click(printPage1);
 
             function printPage1() {
                 var divContents = document.getElementById("page1").innerHTML;
-                var a = window.open('', '', 'height=1000, width=1000');
-                a.document.write('<html>');
-                a.document.write('<body > <h1>Div contents are <br>');
+                var a = window.open('', '', 'height=1000, width=1500');
+
+                a.document.write('<html><head><title>Print Invoice</title>');
+                a.document.write('<link rel="stylesheet" href="{{ asset('storage/css/pdsTable.css') }}" type="text/css" />');
+                a.document.write('<style rel="stylesheet">@media print{.page1-table tr td {padding: 1px;}}</style>');
+                a.document.write('</head><body >');
                 a.document.write(divContents);
                 a.document.write('</body></html>');
                 a.document.close();
                 a.print();
+
             }
         </script>
     @endsection

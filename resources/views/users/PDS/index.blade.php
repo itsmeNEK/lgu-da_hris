@@ -16,7 +16,7 @@
         @endif
     </div>
     <div class="mt-5 text-end">
-        <a href="#print-later" class="btn btn-outline-success text-center">Print Personal DataSheet</a>
+        <a target="_blank" href="{{ route('users.pds.print',$user->id) }}" class="btn btn-outline-success">View Personal Data Sheet</a>
     </div>
     <div class="row mt-3">
         <div class="col">

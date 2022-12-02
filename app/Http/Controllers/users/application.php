@@ -4,6 +4,7 @@ namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
 use App\Models\hr\Publication;
+use App\Models\User;
 use App\Models\users\application as UsersApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,12 @@ class application extends Controller
     public const LOCAL_STORAGE_FOLDER_DELETE = "/public/application-files/";
     private $publication;
     private $application;
-    public function __construct(Publication $publication, UsersApplication $application)
+    private $user;
+    public function __construct(Publication $publication, UsersApplication $application, User $user)
     {
         $this->publication = $publication;
         $this->application = $application;
+        $this->user = $user;
     }
     /**
      * Display a listing of the resource.
@@ -204,5 +207,13 @@ class application extends Controller
         if (Storage::disk('local')->exists($filename_path)) {
             Storage::disk('local')->delete($filename_path);
         }
+    }
+
+
+
+    public function print($user_id)
+    {
+        $user = $this->user->findOrFail($user_id);
+        return view('hr.pds.print')->with('user', $user);
     }
 }

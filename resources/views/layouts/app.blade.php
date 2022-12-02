@@ -18,13 +18,12 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('storage/css/card.css') }}" rel="stylesheet">
+    <link href="{{ asset('storage/css/loading.css') }}" rel="stylesheet">
     <link href="{{ asset('storage/css/sidebar.css') }}" rel="stylesheet">
     <link href="{{ asset('storage/css/table.css') }}" rel="stylesheet">
+    <link href="{{ asset('storage/css/pdsTable.css') }}" rel="stylesheet">
     @yield('customCSS')
-    @yield('head1')
-    @yield('head2')
-    @yield('head3')
-    @yield('head4')
     <style>
         body {
             font-family: 'Trebuchet MS', sans-serif;
@@ -35,8 +34,8 @@
 
 <body class="d-flex flex-column h-100 bg-white">
     <div id="app">
-        <nav class="navbar navbar-expand-lg bg-light navbar-light fw-bold shadow-lg px-5">
-            {{-- <div class="container"> --}}
+        <nav class="navbar navbar-expand-lg bg-light navbar-light fw-bold shadow-lg">
+            <div class="container">
                 <a class="navbar-brand d-inline-block text-truncate" href="{{ url('/') }}">
                     <img src="{{ asset('images/DA-logo.png') }}" width="40" height="35"
                         class="d-inline-block align-text-middle">
@@ -182,7 +181,7 @@
                         @endguest
                     </ul>
                 </div>
-            {{-- </div> --}}
+            </div>
         </nav>
         <div class="d-flex position-absolute" style="z-index:9999;right: 2%; margin-top: 1rem">
             @if (Session::has('alert'))

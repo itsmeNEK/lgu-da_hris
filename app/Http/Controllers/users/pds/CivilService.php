@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\users\pds;
 
 use App\Http\Controllers\Controller;
-use App\Models\pds\civilservice as PdsCivilservice;
+use App\Models\pds\civilservice as pdsCivilService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +15,7 @@ class CivilService extends Controller
     public const LOCAL_STORAGE_FOLDER_DELETE = "/public/pdsFiles/";
     private $civilservice;
 
-    public function __construct(PdsCivilservice $civilservice)
+    public function __construct(pdsCivilService $civilservice)
     {
         $this->civilservice = $civilservice;
     }
@@ -184,13 +184,13 @@ class CivilService extends Controller
         $filenameWithoutExy = pathinfo( $filenameWithExt, PATHINFO_FILENAME );
 
         // creating new name
-        $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+        $filename = $filenameWithoutExy."-".time()."-".Auth::user()->id.".". $file->extension();
 
         // getting file path
         $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
         while (Storage::disk('local')->exists($filename_path)) {
             // creating new name while exist
-            $filename = $filenameWithoutExy."-".time()."-".".". $file->extension();
+            $filename = $filenameWithoutExy."-".time()."-".Auth::user()->id.".". $file->extension();
             $filename_path = self::LOCAL_STORAGE_FOLDER_DELETE . $filename;
         }
 

@@ -58,6 +58,8 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5'], function (
             Route::resource('/learningdevelopment', LearningDevelopment::class);
             Route::resource('/otherinformation', OtherInformation::class);
             Route::resource('/other', OtherController::class);
+
+            Route::get('/{user_id}/print', [application::class, 'print'])->name('print');
         });
         Route::resource('/account', AccountController::class);
         Route::resource('/files', files::class);
@@ -70,6 +72,8 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5'], function (
         Route::post('/application/{id}/apply', [application::class, 'apply'])->name('application.apply');
         Route::get('/application/{id}/edit/{app_id}', [application::class, 'edit'])->name('application.edit');
         Route::patch('/application/{id}/update/{app_id}', [application::class, 'update'])->name('application.update');
+
+
     });
     #hr
     Route::group(['prefix'=> 'hr','as'=>'hr.','middleware'=>'role:0,4'], function () {

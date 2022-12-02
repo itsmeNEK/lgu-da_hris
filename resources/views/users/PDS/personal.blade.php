@@ -14,8 +14,8 @@
         .profile-main-loader .loader {
             position: relative;
             margin: 0px auto;
-          width: 100px;
-          height:100px;
+            width: 100px;
+            height: 100px;
         }
 
         .profile-main-loader .loader:before {
@@ -549,9 +549,9 @@
             </div>
             <div id="waiting" style="display: none" class="my-5">
                 <div class="row h-50 text-center">
-                    <div class="col">
+                    <div class="col mx-auto">
 
-                        <div id="wrapper">
+                        {{-- <div id="wrapper">
                             <div class="profile-main-loader">
                                 <div class="loader">
                                     <svg class="circular-loader" viewBox="25 25 50 50">
@@ -560,11 +560,22 @@
                                     </svg>
                                 </div>
                             </div>
-                        </div><br>
+                        </div> --}}
+                        <div class="main">
+                            <div class="balls balls-1">
+                                <div class="ball ball--1"></div>
+                                <div class="ball ball--2"></div>
+                                <div class="ball ball--3"></div>
+                                <div class="ball ball--4"></div>
+                                <div class="ball ball--5"></div>
+                            </div>
+                        </div>
+                        <br>
                         <h2>Please Wait. <br> Saving Records</h2>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col text-start">
                     <button class="btn btn-outline-secondary" type="button" id="prevBtn"
