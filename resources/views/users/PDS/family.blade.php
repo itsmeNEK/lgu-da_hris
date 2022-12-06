@@ -10,128 +10,6 @@
 
 @section('title', 'PDS Family Background')
 @section('content')
-<style>
-    .profile-main-loader .loader {
-        position: relative;
-        margin: 0px auto;
-          width: 100px;
-          height:100px;
-    }
-
-    .profile-main-loader .loader:before {
-        content: '';
-        display: block;
-        padding-top: 100%;
-    }
-
-    .circular-loader {
-        -webkit-animation: rotate 2s linear infinite;
-        animation: rotate 2s linear infinite;
-        height: 100%;
-        -webkit-transform-origin: center center;
-        -ms-transform-origin: center center;
-        transform-origin: center center;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin: auto;
-    }
-
-    .loader-path {
-        stroke-dasharray: 150, 200;
-        stroke-dashoffset: -10;
-        -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-        animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-        stroke-linecap: round;
-    }
-
-    @-webkit-keyframes rotate {
-        100% {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-
-    @keyframes rotate {
-        100% {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-
-    @-webkit-keyframes dash {
-        0% {
-            stroke-dasharray: 1, 200;
-            stroke-dashoffset: 0;
-        }
-
-        50% {
-            stroke-dasharray: 89, 200;
-            stroke-dashoffset: -35;
-        }
-
-        100% {
-            stroke-dasharray: 89, 200;
-            stroke-dashoffset: -124;
-        }
-    }
-
-    @keyframes dash {
-        0% {
-            stroke-dasharray: 1, 200;
-            stroke-dashoffset: 0;
-        }
-
-        50% {
-            stroke-dasharray: 89, 200;
-            stroke-dashoffset: -35;
-        }
-
-        100% {
-            stroke-dasharray: 89, 200;
-            stroke-dashoffset: -124;
-        }
-    }
-
-    @-webkit-keyframes color {
-        0% {
-            stroke: seagreen;
-        }
-
-        40% {
-            stroke: seagreen;
-        }
-
-        66% {
-            stroke: seagreen;
-        }
-
-        80%,
-        90% {
-            stroke: seagreen;
-        }
-    }
-
-    @keyframes color {
-        0% {
-            stroke: seagreen;
-        }
-
-        40% {
-            stroke: seagreen;
-        }
-
-        66% {
-            stroke: seagreen;
-        }
-
-        80%,
-        90% {
-            stroke: seagreen;
-        }
-    }
-</style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('users.pds.index') }}"
@@ -266,16 +144,17 @@
             <div id="waiting" style="display: none" class="my-5">
                 <div class="row h-50 text-center">
                     <div class="col">
-                        <div id="wrapper">
-                            <div class="profile-main-loader">
-                                <div class="loader">
-                                    <svg class="circular-loader" viewBox="25 25 50 50">
-                                        <circle class="loader-path" cx="50" cy="50" r="20"
-                                            fill="none" stroke="#70c542" stroke-width="2" />
-                                    </svg>
-                                </div>
+
+                        <div class="main">
+                            <div class="balls balls-1">
+                                <div class="ball ball--1"></div>
+                                <div class="ball ball--2"></div>
+                                <div class="ball ball--3"></div>
+                                <div class="ball ball--4"></div>
+                                <div class="ball ball--5"></div>
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
                         <h2>Please Wait. <br> Saving Records</h2>
                     </div>
                 </div>

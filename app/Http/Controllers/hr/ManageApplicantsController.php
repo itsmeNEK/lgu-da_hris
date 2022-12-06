@@ -37,12 +37,12 @@ class ManageApplicantsController extends Controller
         $publication = $this->publication->where('status', '1')->get();
 
         // $all_applicants = $this->paginateArray($this->app_ranking_phase1($all_applicants));
-        $all_applicants = $this->application->paginate(10);
         return view('hr.applicants')
         ->with('publication', $publication)
         ->with('all_applicants', $all_applicants)
         ;
     }
+
     public function paginateArray($items, $perPage = 10, $page = null, $options = [])
 
     {

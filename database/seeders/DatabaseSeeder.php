@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // $this->call([
-        //     referenceSeeder::class,
-        //     UserSeeder::class
-        // ]);
+        $this->call([
+            referenceSeeder::class,
+            UserSeeder::class
+        ]);
 
         $faker = Faker::create();
         $gender = $faker->randomElement(['male', 'female']);

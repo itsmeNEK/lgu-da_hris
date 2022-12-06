@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\admin\EmployeePlantilla;
+use App\Models\hr\InterviewExam;
 use App\Models\hr\LeaveCredit;
 use App\Models\pds\civilservice;
 use App\Models\pds\educational;
@@ -17,6 +18,7 @@ use App\Models\users\application;
 use App\Models\users\Covid;
 use App\Models\users\others;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +26,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -192,6 +194,11 @@ class User extends Authenticatable
     public function application()
     {
         return $this->hasMany(application::class, 'user_id');
+    }
+
+    public function InterviewExam()
+    {
+        return $this->hasOne(InterviewExam::class, 'user_id');
     }
 
     public function app_ranking($id)

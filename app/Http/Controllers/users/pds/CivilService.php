@@ -50,9 +50,6 @@ class CivilService extends Controller
     {
         $request->validate([
             'CSCareer'=>'required|min:1',
-            'CSRating'=>'required|min:1',
-            'CSDate'=>'required|min:1',
-            'CSPlaceExam'=>'required|min:1',
             'CSnumber'=>'required|min:1',
             'CSDateValid'=>'required|min:1',
             'document'=>'max:25000|mimes:pdf',

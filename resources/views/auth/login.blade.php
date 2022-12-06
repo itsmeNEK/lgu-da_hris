@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card border-success">
-                <div class="card-header bg-success text-center text-white"><h2>Login to Your Account</h2></div>
+            <div class="card shadow">
+                <div class="card-header bg-white text-center border-0"><h2>Login to Your Account</h2></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -54,7 +54,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success w-100">
+                                <button type="submit" class="btn btn-outline-success w-100">
                                     <i class="fa-solid fa-right-to-bracket"></i> {{ __('Login') }}
                                 </button>
                             </div>

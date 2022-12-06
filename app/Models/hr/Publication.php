@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Publication extends Model
 {
     use HasFactory;
+
+
+    public function interviewExamPublication()
+    {
+        return $this->hasMany(InterviewExam::class, 'pub_id');
+    }
 }

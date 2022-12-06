@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
+use App\Models\hr\InterviewExam;
 use App\Models\hr\Publication;
 use App\Models\User;
 use App\Models\users\application as UsersApplication;
@@ -18,11 +19,13 @@ class application extends Controller
     private $publication;
     private $application;
     private $user;
-    public function __construct(Publication $publication, UsersApplication $application, User $user)
+    private $interviewExam;
+    public function __construct(Publication $publication, UsersApplication $application, User $user, InterviewExam $interviewExam)
     {
         $this->publication = $publication;
         $this->application = $application;
         $this->user = $user;
+        $this->interviewExam = $interviewExam;
     }
     /**
      * Display a listing of the resource.
@@ -53,6 +56,13 @@ class application extends Controller
      */
     public function apply(Request $request, $id)
     {
+        $app = $this->application->where('user_id', Auth::user()->id)->first();
+        if($app){
+            if ($app->pub_id == $id) {
+                Session::flash('alert', 'danger|Application has already been Sent');
+                return back();
+            }
+        }
         $request->validate([
             'tor' => 'required|max:25000|mimes:pdf',
         ]);
@@ -65,24 +75,28 @@ class application extends Controller
             $request->validate([
 
                 'eligibility' => 'required|max:25000|mimes:pdf',
-        ]);
+            ]);
 
             $this->application->eligibility = $this->saveFile($request->eligibility);
         }
         if ($request->residency) {
             $request->validate([
             'residency' => 'required|max:25000|mimes:pdf',
-        ]);
+            ]);
             $this->application->residency = $this->saveFile($request->residency);
         }
         if ($request->rating) {
             $request->validate([
             'rating' => 'required|max:25000|mimes:pdf',
-        ]);
+            ]);
             $this->application->rating = $this->saveFile($request->rating);
         }
 
         if ($this->application->save()) {
+            $this->interviewExam->user_id = Auth::user()->id;
+            $this->interviewExam->app_id = $this->application->id;
+            $this->interviewExam->pub_id = $id;
+            $this->interviewExam->save();
             Session::flash('alert', 'success|Application has been Sent');
             return redirect()->route('users.application.index');
         } else {
@@ -100,10 +114,15 @@ class application extends Controller
      */
     public function show($id)
     {
-        $publication = $this->publication->findOrFail($id);
-        return view('users.application.application-form')
-        ->with('edit_app', null)
-        ->with('publication', $publication);
+        if (Auth::user()->role == '1') {
+            $publication = $this->publication->findOrFail($id);
+            return view('users.application.application-form')
+            ->with('edit_app', null)
+            ->with('publication', $publication);
+        } else {
+            Session::flash('alert', 'danger|Employee Cannot Apply');
+            return back();
+        }
     }
 
     /**
@@ -156,7 +175,19 @@ class application extends Controller
 
     public function delete($id)
     {
-        if ($this->application->destroy($id)) {
+        $app = $this->application->onlyTrashed()->findOrFail($id);
+        if ($app->residency) {
+            $this->deleteFile($app->residency);
+        }
+        if ($app->rating) {
+            $this->deleteFile($app->rating);
+        }if ($app->eligibility) {
+            $this->deleteFile($app->eligibility);
+        }if ($app->tor) {
+            $this->deleteFile($app->tor);
+        }
+
+        if ($this->application->onlyTrashed()->forceDelete($id)) {
             Session::flash('alert', 'success|Application has been Deleted');
             return redirect()->route('users.application.index');
         } else {

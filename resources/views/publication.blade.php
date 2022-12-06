@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="col-12 col-sm-10 col-md-6 col-lg-3 mb-5">
+                    <div class="col-12 col-sm-10 col-md-6 col-lg-4 mb-5">
                         <div class="card-container">
                             <div class="card">
                                 <div class="face face1">

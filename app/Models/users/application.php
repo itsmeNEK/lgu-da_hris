@@ -2,6 +2,7 @@
 
 namespace App\Models\users;
 
+use App\Models\hr\InterviewExam;
 use App\Models\hr\Publication;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,10 @@ class application extends Model
     public function publication()
     {
         return $this->belongsTo(Publication::class, 'pub_id');
+    }
+    public function InterviewExam()
+    {
+        return $this->hasOne(InterviewExam::class, 'app_id');
     }
 
     public function scopeApplication($query, $request)

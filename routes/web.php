@@ -3,13 +3,16 @@
 use App\Http\Controllers\admin\Department;
 use App\Http\Controllers\admin\PlantillaController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\FilesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\hr\applicantController;
 use App\Http\Controllers\hr\dashboard;
+use App\Http\Controllers\hr\InterviewExamController;
 use App\Http\Controllers\hr\LeaveRecordController;
 use App\Http\Controllers\hr\ManageApplicantsController;
 use App\Http\Controllers\hr\pdsController;
 use App\Http\Controllers\hr\PublicationController;
+use App\Http\Controllers\hr\RangkingController;
 use App\Http\Controllers\hr\ServiceRecord;
 use App\Http\Controllers\ipcrController;
 use App\Http\Controllers\users\AccountController;
@@ -41,9 +44,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [HomeController::class, 'index'])->name('publication');
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5'], function () {
+Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5','middleware'=>'verified'], function () {
     Route::group(['prefix'=> '/users','as'=>'users.'], function () {
 
         Route::group(['prefix'=> '/pds','as'=>'pds.'], function () {
@@ -87,6 +90,8 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5'], function (
         Route::resource('/dashboard', dashboard::class);
         Route::resource('/manage_applicants', ManageApplicantsController::class);
         Route::resource('/applicant', applicantController::class);
+        Route::resource('/interview', InterviewExamController::class);
+        Route::resource('/ranking', RangkingController::class);
     });
     #admin
     Route::group(['prefix'=> 'admin','as'=>'admin.','middleware'=>'role:0'], function () {

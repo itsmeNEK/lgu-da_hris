@@ -87,9 +87,11 @@
                                 Eligibility,Rating,License.<p class="text-secondary">Note!Not Required. (PDF only)</p>
                             </div>
                             @if ($edit_app)
-                                <a class="btn btn-success btn-sm"
-                                    href="/storage/application-files/{{ $edit_app->eligibility }}"><i
-                                        class="fa-solid fa-eye me-1"></i>Open File</a>
+                                @if ($edit_app->eligibility)
+                                    <a class="btn btn-success btn-sm"
+                                        href="/storage/application-files/{{ $edit_app->eligibility }}"><i
+                                            class="fa-solid fa-eye me-1"></i>Open File</a>
+                                @endif
                             @endif
                         </div>
                     </div>

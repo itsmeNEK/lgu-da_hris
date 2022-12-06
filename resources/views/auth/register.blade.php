@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card border-success">
-                <div class="card-header bg-success text-center text-white"><h2>Register an Account</h2></div>
+            <div class="card shadow">
+                <div class="card-header  bg-white text-center border-0"><h2>Register an Account</h2></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">

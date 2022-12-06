@@ -19,9 +19,6 @@
                                     <option hidden>No Publication Yet</option>
                                 @endforelse
                             </select>
-                            {{-- <input type="text" class="form-control" name="search" placeholder="Search"
-                                aria-label="Recipient's username" aria-describedby="button-addon2"
-                                value="{{ old('search') }}"> --}}
                             <input type="text" class="form-control" name="search" placeholder="Search"
                                 aria-label="Recipient's username" aria-describedby="button-addon2"
                                 value="{{ old('search') }}">

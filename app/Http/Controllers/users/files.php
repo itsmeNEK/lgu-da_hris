@@ -24,7 +24,7 @@ class files extends Controller
     public function index()
     {
         $user = $this->user->findOrFail(Auth::user()->id);
-        return view('users.Files.myfiles')->with('user',$user);
+        return view('users.Files.records')->with('user',$user);
     }
 
     /**
@@ -34,7 +34,9 @@ class files extends Controller
      */
     public function create()
     {
-        //
+
+        $user = $this->user->findOrFail(Auth::user()->id);
+        return view('users.Files.files')->with('user',$user);
     }
 
     /**

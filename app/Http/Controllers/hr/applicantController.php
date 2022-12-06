@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hr;
 
 use App\Http\Controllers\Controller;
+use App\Models\hr\InterviewExam;
 use App\Models\pds\personal;
 use App\Models\users\application;
 use Illuminate\Http\Request;
@@ -11,10 +12,12 @@ class applicantController extends Controller
 {
     private $personal;
     private $application;
+    private $interviewExam;
 
-    public function __construct(personal $personal,application $application)
+    public function __construct(personal $personal,application $application,InterviewExam $interviewExam)
     {
         $this->personal = $personal;
+        $this->interviewExam = $interviewExam;
         $this->application = $application;
     }
 
@@ -59,7 +62,9 @@ class applicantController extends Controller
     public function show($id)
     {
         $app = $this->application->findOrFail($id);
+        $interviewExam = $this->interviewExam->where('app_id',$app->user_id)->where('pub_id',$app->pub_id)->first();
         return view('hr.applicant.applicantInfo')
+        ->with('interviewExam',$interviewExam)
         ->with('application',$app)
         ;
     }

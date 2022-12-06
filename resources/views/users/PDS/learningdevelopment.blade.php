@@ -28,7 +28,7 @@
                     @if ($edit_lnd) value="{{ $edit_lnd->LDtitle }}"
                     @else
                     value="{{ old('LDtitle') }}" @endif>
-                <label for="LDtitle" class="form-label small">Position Title</label>
+                <label for="LDtitle" class="form-label small">Title</label>
                 @error('LDtitle')
                     <p class="text-danger small">{{ $message }}</p>
                 @enderror
@@ -36,7 +36,7 @@
             <div class="row mb-3">
                 <div class="col-12 col-md">
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control text-uppercase" name="LDidfrom" id="LDidfrom"
+                        <input type="datetime-local" class="form-control text-uppercase" name="LDidfrom" id="LDidfrom"
                             placeholder=""
                             @if ($edit_lnd) value="{{ $edit_lnd->LDidfrom }}"
                             @else
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-12 col-md">
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control text-uppercase" name="LDidto" id="LDidto"
+                        <input type="datetime-local" class="form-control text-uppercase" name="LDidto" id="LDidto"
                             placeholder=""
                             @if ($edit_lnd) value="{{ $edit_lnd->LDidto }}"
                             @else
