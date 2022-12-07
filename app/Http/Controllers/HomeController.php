@@ -22,7 +22,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $publication = $this->publication->paginate(10);
+
+        $publication = $this->publication->get();
         return view('publication')->with('publication',$publication);
     }
 }

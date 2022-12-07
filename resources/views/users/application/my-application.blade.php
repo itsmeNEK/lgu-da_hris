@@ -53,12 +53,12 @@
                                                 <button type="submit"
                                                     class="btn btn-success fw-bold btn-sm text-white">Resubmit</button>
                                             </form>
-                                            <form action="{{ route('users.application.delete', $app->id) }}" method="POST">
+                                            {{-- <form action="{{ route('users.application.delete', $app->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
                                                     class="btn btn-danger fw-bold btn-sm rounded-0 rounded-end">Delete</button>
-                                            </form>
+                                            </form> --}}
                                         @elseif($app->status == 1)
                                             <form action="{{ route('users.application.destroy', $app->id) }}"
                                                 method="POST">

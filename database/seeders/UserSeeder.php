@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'admin',
                 'email' => 'admin.admin@admin.admin',
                 'email_verified_at' => now(),
-                'password' => Hash::make('admin'),
+                'password' => Hash::make('delfinalbanohris'),
                 'role' => '0',
                 'avatar' => 'avatar.png',
             ],
@@ -35,8 +35,8 @@ class UserSeeder extends Seeder
                 'first_name' => 'BILL ZHEDRICK',
                 'last_name' => 'GASPAR',
                 'email' => 'gasparkenken55@gmail.com',
+                'email_verified_at' => now(),
                 'password' => Hash::make('kenken12345'),
-                'email_verified_at' => null,
                 'role' => '0',
                 'avatar' => 'avatar.png',
             ]

@@ -40,7 +40,7 @@
         <nav class="navbar navbar-expand-lg bg-light navbar-light fw-bold shadow-lg background-image">
             <div class="container">
                 <a class="navbar-brand d-inline-block text-truncate" href="{{ url('/') }}">
-                    <img src="{{ asset('images/DA-logo.png') }}" width="40" height="35"
+                    <img src="{{ asset('images/DA-logo.png') }}" width="50" height="45"
                         class="d-inline-block align-text-middle">
                     {{ config('app.name') }}
                 </a>

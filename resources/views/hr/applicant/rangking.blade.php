@@ -9,9 +9,8 @@
     <div class="row justify-content-center">
         <h3><i class="fa-solid fa-chart-simple me-2"></i>Ranking</h3>
         <div class="col-12 col-md-10 mt-3">
-
             <div class="row justify-content-end">
-                <div class="col-12 col-md text-end">
+                <div class="col-12 col-md-4">
                     <form action="{{ route('hr.ranking.index') }}" method="get">
                         @csrf
                         <div class="input-group mb-3">
@@ -29,25 +28,43 @@
                 </div>
             </div>
 
-    @if ($ranking)
-    <div class="table-responsive" id="no-more-tables">
-        <table class="table table-hover table-striped smnall table-sm text-center">
-            <thead>
-                <tr class="table-success">
-                    <th class="numeric" width="10%"></th>
-                    <th class="numeric" >Applicant Name</th>
-                    <th class="numeric" >Position</th>
-                    <th class="numeric" width="20%"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-center">
-        </div>
-    </div>
-    @endif
+            @if (!empty(request()->except('_token', '_method')))
+                <div class="table-responsive" id="no-more-tables">
+                    <table class="table table-hover table-striped smnall table-sm text-center">
+                        <thead>
+                            <tr class="table-success">
+                                <th class="numeric" width="10%">Rank</th>
+                                <th class="numeric">Applicant Name</th>
+                                <th class="numeric">Position</th>
+                                <th class="numeric">Total Points</th>
+                                <th class="numeric" width="20%"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            @forelse ($ranking as $item)
+                                <tr>
+                                    <td data-title="Rank">{{ $loop->iteration }}</td>
+                                    <td data-title="Applicant Name">
+                                        {{ $item['user']->first_name . ' ' . $item['user']->last_name }}
+                                    </td>
+                                    <td data-title="Position">
+                                        {{ $item['app']->publication->title }}
+                                    </td>
+                                    <td data-title="Total Points">
+                                        {{ $item['total'] }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <td colspan="4">No Applicants</td>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center">
+                    </div>
+                </div>
+            @else
+            <h3 class="text-center my-5">Select Position and Click get Ranking</h3>
+            @endif
         </div>
     </div>
 

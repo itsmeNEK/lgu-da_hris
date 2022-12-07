@@ -6,7 +6,7 @@
     <form method="POST" action="{{ route('users.account.update', $user->id) }}" enctype="multipart/form-data">
         <div class="row justify-content-center p-3">
             <div class="col-12 col-md-4 justify-content-center">
-                <img src="{{ asset('/storage/user_avatar/' . $user->avatar) }}" class="rounded-circle profile-img img-thumbnail"
+                <img src="{{ asset('/storage/user_avatar/' . $user->avatar) }}" class="rounded-circle profile-img img-fluid img-thumbnail"
                     alt="{{ $user->avatar }}">
                 <div class="mb-3">
                     <div class="mb-3">
