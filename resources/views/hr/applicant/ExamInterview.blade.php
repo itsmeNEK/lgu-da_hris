@@ -33,7 +33,7 @@
                 @method('PATCH')
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input type="number" min="1" max="10" class="form-control" name="written_exam"
+                        <input type="text" min="1" max="10" class="form-control" name="written_exam"
                             id="written_exam" aria-describedby="written_exam" placeholder="Written Exam"
                             @if ($interviewExam->written_exam)
                             value="{{ $interviewExam->written_exam }}"
@@ -78,7 +78,7 @@
                 @method('PATCH')
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input type="number" min="1" max="10" class="form-control" name="oral_exam"
+                        <input type="text" min="1" max="10" class="form-control" name="oral_exam"
                             id="oral_exam" aria-describedby="oral_exam" placeholder="Oral Exam Rating"
                             @if ($interviewExam->oral_exam)
                             value="{{ $interviewExam->oral_exam }}"
@@ -103,7 +103,7 @@
                 <small id="written_exam" class="form-text text-muted">&nbsp;</small>
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input type="number" min="1" max="10" class="form-control" name="background"
+                        <input type="text" min="1" max="10" class="form-control" name="background"
                             id="background" aria-describedby="background" placeholder="Background Investigation"
                             @if ($interviewExam->background)
                             value="{{ $interviewExam->background }}"
@@ -130,7 +130,7 @@
                 @method('PATCH')
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input type="number" min="1" max="10" class="form-control" name="performance"
+                        <input type="text" min="1" max="10" class="form-control" name="performance"
                             id="performance" aria-describedby="performance" placeholder="Performance"
                             @if ($interviewExam->performance)
                             value="{{ $interviewExam->performance }}"
@@ -154,7 +154,7 @@
                 @method('PATCH')
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input type="number" min="1" max="10" class="form-control" name="pspt"
+                        <input type="text" min="1" max="10" class="form-control" name="pspt"
                             id="pspt" aria-describedby="pspt" placeholder="Psycho-social - Personal Traits"
                             @if ($interviewExam->pspt)
                             value="{{ $interviewExam->pspt }}"
@@ -178,7 +178,7 @@
                 @method('PATCH')
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input type="number" min="1" max="10" class="form-control" name="potential"
+                        <input type="text" min="1" max="10" class="form-control" name="potential"
                             id="potential" aria-describedby="potential" placeholder="Potential"
                             @if ($interviewExam->potential)
                             value="{{ $interviewExam->potential }}"

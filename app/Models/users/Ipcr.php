@@ -15,4 +15,24 @@ class Ipcr extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function scopeSemester($query, $request)
+    {
+        if ($request->from && $request->to) {
+            return $query
+            ->where('from', 'like', '%'.$request->from.'%')
+            ->Where('to', 'like', '%'.$request->to.'%');
+        } else {
+            return $query;
+        }
+    }
+    public function scopeDeptHead($query, $request)
+    {
+        if ($request->from && $request->to) {
+            return $query
+            ->where('from', 'like', '%'.$request->from.'%')
+            ->Where('to', 'like', '%'.$request->to.'%');
+        } else {
+            return $query;
+        }
+    }
 }

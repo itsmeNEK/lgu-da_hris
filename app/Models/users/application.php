@@ -30,22 +30,21 @@ class application extends Model
 
     public function scopeApplication($query, $request)
     {
-        {
-            if ($request->pub_id && $request->search) {
-                return $query
-                ->where('pub_id', $request->pub_id)
-                ->where('first_name', 'like', '%'.$request->search.'%')
-                ->orWhere('last_name', 'like', '%'.$request->search.'%');
-            } elseif ($request->pub_id) {
-                return $query
-                ->where('pub_id', $request->pub_id);
-            } elseif ($request->search) {
-                return $query
-                ->where('first_name', 'like', '%'.$request->search.'%')
-                ->orWhere('last_name', 'like', '%'.$request->search.'%');
-            }else{
-                return $query;
-            }
+        $query = $query->where('status','1');
+        if ($request->pub_id && $request->search) {
+            return $query
+            ->where('pub_id', $request->pub_id)
+            ->where('first_name', 'like', '%'.$request->search.'%')
+            ->orWhere('last_name', 'like', '%'.$request->search.'%');
+        } elseif ($request->pub_id) {
+            return $query
+            ->where('pub_id', $request->pub_id);
+        } elseif ($request->search) {
+            return $query
+            ->where('first_name', 'like', '%'.$request->search.'%')
+            ->orWhere('last_name', 'like', '%'.$request->search.'%');
+        } else {
+            return $query;
         }
     }
 }

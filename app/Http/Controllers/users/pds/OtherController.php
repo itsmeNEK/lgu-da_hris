@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\users\others;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 
 class OtherController extends Controller
@@ -163,11 +164,11 @@ class OtherController extends Controller
         $other->Rtel1 = $request->Rtel1;
         $other->Rtel2 = $request->Rtel2;
         $other->Rtel3 = $request->Rtel3;
-        $other->IDa1 = $request->IDa1;
+        $other->IDa1 = Crypt::encrypt($request->IDa1);
         $other->IDa2 = $request->IDa2;
-        $other->IDb1 = $request->IDb1;
+        $other->IDb1 = Crypt::encrypt($request->IDb1);
         $other->IDb2 = $request->IDb2;
-        $other->IDc1 = $request->IDc1;
+        $other->IDc1 = Crypt::encrypt($request->IDc1);
         $other->IDc2 = $request->IDc2;
         if ($other->save()) {
             Session::flash('alert', 'success|Record has been Saved');

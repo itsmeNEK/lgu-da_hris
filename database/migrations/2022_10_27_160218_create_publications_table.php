@@ -23,7 +23,7 @@ class CreatePublicationsTable extends Migration
             $table->string('trainig');
             $table->string('experience');
             $table->string('eligibility');
-            $table->string('competency');
+            $table->string('competency')->default('N/A');
             $table->string('assignment');
             $table->string('status')->default(1)->comment('1:active 0:inactive');
             $table->timestamps();

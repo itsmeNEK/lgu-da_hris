@@ -153,7 +153,14 @@
     <div class="row justify-content-center">
         <div class="col-11 col-lg m-1 bg-success bg-gradient text-white rounded">
             <p class=" h3 text-center mb-3 fw-bold">Next Loyalty Award</p>
-
+            <p class="text-center my-3">
+                @if ($user->hasloyaltyRecord())
+                    {{ date('M, d Y', strtotime($user->loyaltyRecord->next_loyalty)) }}
+                    | {{ \Carbon\Carbon::parse($user->loyaltyRecord->next_loyalty)->diffForHumans() }}
+                @else
+                    -
+                @endif
+            </p>
         </div>
         <div class="col-11 col-lg m-1 bg-success bg-gradient text-white rounded">
             <p class="h3 text-center mb-3 fw-bold">Leave Credit</p>

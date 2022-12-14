@@ -16,8 +16,8 @@ class CreateCovidsTable extends Migration
         Schema::create('covids', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('booster');
-            $table->string('photo');
+            $table->string('booster')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

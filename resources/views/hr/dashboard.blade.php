@@ -74,7 +74,7 @@
             <form action="{{ route('hr.dashboard.index') }}" method="get">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="search" placeholder="Search Position"
+                    <input type="text" class="form-control" name="search" placeholder="Search Employee"
                         aria-label="Recipient's username" aria-describedby="button-addon2"
                         value="{{ old('search') }}">
                     <button class="btn btn-warning text-white fw-bold"><i

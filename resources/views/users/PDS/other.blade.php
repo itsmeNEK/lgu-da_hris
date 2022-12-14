@@ -10,6 +10,18 @@
             <li class="breadcrumb-item active" aria-current="page">Other</li>
         </ol>
     </nav>
+    <div class="row">
+        <div class="col text-start">
+            <a href="{{ route('users.pds.otherinformation.index') }}" class="btn btn-outline-success">Other Information<i class="fa-solid fa-chevron-left ms-2"></i></a>
+        </div>
+        <div class="col text-center">
+            <strong>Go to</strong>
+        </div>
+        <div class="col text-end">
+
+        </div>
+    </div>
+    <hr>
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
             @if ($edit_other)

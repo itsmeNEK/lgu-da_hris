@@ -62,7 +62,7 @@ class applicantController extends Controller
     public function show($id)
     {
         $app = $this->application->findOrFail($id);
-        $interviewExam = $this->interviewExam->where('app_id',$app->user_id)->where('pub_id',$app->pub_id)->first();
+        $interviewExam = $this->interviewExam->where('app_id',$app->id)->first();
         return view('hr.applicant.applicantInfo')
         ->with('interviewExam',$interviewExam)
         ->with('application',$app)

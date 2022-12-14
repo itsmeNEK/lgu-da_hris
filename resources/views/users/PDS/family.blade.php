@@ -17,6 +17,19 @@
         <li class="breadcrumb-item active" aria-current="page">Family Background</li>
     </ol>
 </nav>
+
+<div class="row">
+    <div class="col text-start">
+        <a href="{{ route('users.pds.personal.index') }}" class="btn btn-outline-success">Personal Information<i class="fa-solid fa-chevron-left ms-2"></i></a>
+    </div>
+    <div class="col text-center">
+        <strong>Go to</strong>
+    </div>
+    <div class="col text-end">
+        <a href="{{ route('users.pds.educational.index') }}" class="btn btn-outline-success"><i class="fa-solid fa-chevron-right me-2"></i>Educational Background</a>
+    </div>
+</div>
+<hr>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6">
 

@@ -30,12 +30,14 @@
     <style>
         body {
             font-family: 'Trebuchet MS', sans-serif;
+            width: 100vw;
+            overflow-x: hidden;
         }
     </style>
 
 </head>
 
-<body class="d-flex flex-column h-100 bg-white">
+<body class="bg-white">
     <div id="app">
         <nav class="navbar navbar-expand-lg bg-light navbar-light fw-bold shadow-lg background-image">
             <div class="container">
@@ -57,18 +59,18 @@
                             <a href="/" class="nav-link">Publication</a>
                         </li>
                         @if (Auth::user())
-                        <hr class=" d-block d-md-none">
-                        <li class="nav-item d-block d-md-none">
-                            <a href="{{ route('users.pds.index') }}" class="nav-link">Personal Data Sheet</a>
-                        </li>
-                        <li class="nav-item d-block d-md-none">
-                            @can('isUser')
-                                <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
-                            @else
-                                <a href="{{ route('users.files.index') }}" class="nav-link">My Files</a>
-                                <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
-                            @endcan
-                        </li>
+                            <hr class=" d-block d-md-none">
+                            <li class="nav-item d-block d-md-none">
+                                <a href="{{ route('users.pds.index') }}" class="nav-link">Personal Data Sheet</a>
+                            </li>
+                            <li class="nav-item d-block d-md-none">
+                                @can('isUser')
+                                    <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
+                                @else
+                                    <a href="{{ route('users.files.index') }}" class="nav-link">My Files</a>
+                                    <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
+                                @endcan
+                            </li>
                             <li class="nav-item d-block d-md-none">
                                 <a href="{{ route('users.account.edit', Auth::user()->id) }}" class="nav-link">Account
                                     Settings</a>
@@ -131,8 +133,11 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <bell-component></bell-component>
+                            </li>
                             <li class="nav-item dropdown d-none d-md-block">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                <a id="navbarDropdown" class="nav-link fs-5" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Hello! <strong>{{ Auth::user()->first_name }}</strong>
                                 </a>
@@ -222,7 +227,8 @@
                                                     class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-briefcase me-1"></i>My Records
                                                 </a>
-                                                <a href="{{ route('users.files.create') }}" class="list-group-item list-group-item-action border-0">
+                                                <a href="{{ route('users.files.create') }}"
+                                                    class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-box-archive me-2"></i></i>My Files
                                                 </a>
                                             @endcan
@@ -231,7 +237,7 @@
                                                 <i class="fa-solid fa-user-gear me-1"></i>Account Settings
                                             </a>
                                         </div>
-                                        @canany(['isAdmin','isHR'])
+                                        @canany(['isAdmin', 'isHR'])
                                             <hr class="text-dark">
                                             <div class="list-group border-0 text-start">
                                                 {{-- RSP --}}
@@ -245,10 +251,11 @@
                                                         href="{{ route('hr.manage_applicants.index') }}"><i
                                                             class="fa-solid fa-user-plus me-1"></i>Applicants</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="{{ route('hr.ranking.index') }}"><i class="fa-solid fa-chart-simple me-2"></i>Ranking</a>
+                                                        href="{{ route('hr.ranking.index') }}"><i
+                                                            class="fa-solid fa-chart-simple me-2"></i>Ranking</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i
-                                                            class="fa-solid fa-arrow-pointer me-2"></i>Selection</a>
+                                                        href="{{ route('hr.manage_applicants.create') }}"><i
+                                                            class="fa-solid fa-check me-2"></i>Accepted</a>
                                                 </div>
                                                 {{-- PMS --}}
                                                 <a href="#pms" class="list-group-item list-group-item-action border-0"
@@ -262,10 +269,11 @@
                                                         href="{{ route('hr.pms.index') }}"><i
                                                             class="fa-solid fa-plus me-2"></i>Add PMS</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i
-                                                            class="fa-solid fa-chart-simple me-2"></i>Department</a>
+                                                        href="{{ route('hr.pmsEmployee.index') }}"><i
+                                                            class="fa-solid fa-signal me-2"></i>Employee</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i class="fa-solid fa-signal me-2"></i>Employee</a>
+                                                        href="{{ route('hr.pmsEmployee.create') }}"><i
+                                                            class="fa-solid fa-chart-simple me-2"></i>Department</a>
                                                 </div>
                                                 {{-- lnd --}}
                                                 <a href="#lnd" class="list-group-item list-group-item-action border-0"
@@ -279,10 +287,11 @@
                                                         href="{{ route('hr.lnd.create') }}"><i
                                                             class="fa-solid fa-globe me-2"></i>All</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i
-                                                            class="fa-solid fa-person-dots-from-line me-2"></i>Traning</a>
+                                                        href="{{ route('hr.trainingneeds.index') }}"><i
+                                                            class="fa-solid fa-person-dots-from-line me-2"></i>Training Need
+                                                        Analysis</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i
+                                                        href="{{ route('hr.assessment.index') }}"><i
                                                             class="fa-solid fa-check-double me-2"></i>Assessment</a>
                                                 </div>
                                                 {{-- R n R --}}
@@ -296,11 +305,14 @@
                                                         href=""><i
                                                             class="fa-solid fa-square-poll-vertical me-2"></i>Survey</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i
+                                                        href="{{ route('hr.certificates.index') }}"><i
                                                             class="fa-solid fa-certificate me-2"></i>Certificate</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="#"><i class="fa-solid fa-user-tag me-2"></i>loyalty
+                                                        href="{{ route('hr.loyalty.index') }}"><i
+                                                            class="fa-solid fa-user-tag me-2"></i>loyalty
                                                         award</a>
+                                                    <a class="list-group-item list-group-item-action border-0"
+                                                        href="{{ route('hr.top5.index') }}"><i class="fa-solid fa-envelopes-bulk me-2"></i>Top 5 Offices</a>
                                                 </div>
                                             </div>
                                             <hr class="text-dark">
@@ -365,7 +377,7 @@
                     <!-- Grid column -->
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                         <!-- Content -->
-                        <h6 class="text-uppercase fw-bold mb-4">
+                        <h6 class="text-uppercase fw-bold my-4">
                             <img src="{{ asset('images/DA-logo.png') }}" width="20" height="20"
                                 class="d-inline-block">
                             LGU Delfin Albano
@@ -380,7 +392,7 @@
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <h6 class="text-uppercase fw-bold my-4">Contact</h6>
                         <p><i class="fas fa-home me-3"></i> Delfin Albano, Isabela, Ph</p>
                         <p>
                             <i class="fas fa-envelope me-3"></i>
@@ -397,7 +409,7 @@
 
         <!-- Copyright -->
         <div class="text-center p-2 bottom-0" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2022 Copyright:
+            © 2023 Copyright:
             <a class="text-reset fw-bold" href="#">LGU Delfin Albano</a>
         </div>
         <!-- Copyright -->
@@ -410,6 +422,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @yield('customJS')
     <script src="{{ asset('storage/js/modal.js') }}"></script>
+    <script src="{{ asset('storage/js/selectSort.js') }}"></script>
 </body>
 
 </html>

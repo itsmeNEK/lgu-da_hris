@@ -10,6 +10,18 @@
             <li class="breadcrumb-item active" aria-current="page">Other Information</li>
         </ol>
     </nav>
+    <div class="row">
+        <div class="col text-start">
+            <a href="{{ route('users.pds.learningdevelopment.index') }}" class="btn btn-outline-success">Learning and Develoment<i class="fa-solid fa-chevron-left ms-2"></i></a>
+        </div>
+        <div class="col text-center">
+            <strong>Go to</strong>
+        </div>
+        <div class="col text-end">
+            <a href="{{ route('users.pds.other.index') }}" class="btn btn-outline-success"><i class="fa-solid fa-chevron-right me-2"></i>Other</a>
+        </div>
+    </div>
+    <hr>
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
             @if ($edit_other)
@@ -34,7 +46,7 @@
                 @enderror
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control text-uppercase" name="Ononacad" id="Ononacad" placeholder=""
+                <input type="text" class="form-control text-uppercase" name="Ononacad" id="Ononacad" placeholder="Non Academic Distinction"
                     @if ($edit_other) value="{{ $edit_other->Ononacad }}"
                             @else
                             value="{{ old('Ononacad') }}" @endif>
@@ -44,7 +56,7 @@
                 @enderror
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control text-uppercase" name="Omemship" id="Omemship" placeholder=""
+                <input type="text" class="form-control text-uppercase" name="Omemship" id="Omemship" placeholder="Membership in Assiociation"
                     @if ($edit_other) value="{{ $edit_other->Omemship }}"
                             @else
                             value="{{ old('Omemship') }}" @endif>

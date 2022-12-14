@@ -10,6 +10,7 @@
 
 @section('title', 'PDS Personal Information')
 @section('content')
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('users.pds.index') }}"
@@ -17,6 +18,18 @@
             <li class="breadcrumb-item active" aria-current="page">Personal</li>
         </ol>
     </nav>
+    <div class="row">
+        <div class="col text-end">
+
+        </div>
+        <div class="col text-center">
+            <strong>Go to</strong>
+        </div>
+        <div class="col text-end">
+            <a href="{{ route('users.pds.family.index') }}" class="btn btn-outline-success"><i class="fa-solid fa-chevron-right me-2"></i>Family Background</a>
+        </div>
+    </div>
+    <hr>
     <div class="row d-flex justify-content-center">
         <div class="col col-md-6">
 

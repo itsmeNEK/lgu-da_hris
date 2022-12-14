@@ -98,7 +98,7 @@
                     <div class="form-floating mb-3">
                         <select name="experience" id="eligibility"class="form-select">
                             {{-- option 1 --}}
-                        <option value="0"
+                            <option value="0"
                                 @if ($edit_pub) {{ old('experience') == 0 || $edit_pub->experience == 0 ? 'selected' : '' }}
                             @else
                             {{ old('experience') == 0 ? 'selected' : '' }} @endif>
@@ -108,28 +108,28 @@
                         @else
                         {{ old('experience') == 1 ? 'selected' : '' }} @endif>
                                 1 year of relevant experience</option>
-                                {{-- option 2 --}}
+                            {{-- option 2 --}}
                             <option value="2"
                                 @if ($edit_pub) {{ old('experience') == 2 || $edit_pub->experience == 2 ? 'selected' : '' }}
                         @else
                         {{ old('experience') == 2 ? 'selected' : '' }} @endif>
                                 2 years of relevant
                                 experience</option>
-                                {{-- option 3 --}}
+                            {{-- option 3 --}}
                             <option value="3"
                                 @if ($edit_pub) {{ old('experience') == 3 || $edit_pub->experience == 3 ? 'selected' : '' }}
                         @else
                         {{ old('experience') == 3 ? 'selected' : '' }} @endif>
                                 3 years of relevant
                                 experience</option>
-                                {{-- option 4 --}}
+                            {{-- option 4 --}}
                             <option value="4"
                                 @if ($edit_pub) {{ old('experience') == 4 || $edit_pub->experience == 4 ? 'selected' : '' }}
                         @else
                         {{ old('experience') == 4 ? 'selected' : '' }} @endif>
                                 4 years of relevant
                                 experience</option>
-                                {{-- option 5 --}}
+                            {{-- option 5 --}}
                             <option value="5"
                                 @if ($edit_pub) {{ old('experience') == 5 || $edit_pub->experience == 5 ? 'selected' : '' }}
                         @else
@@ -248,9 +248,13 @@
                                         <form action="{{ route('hr.publication.destroy', $pub->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm rounded-0 rounded-end"><i
-                                                    class="fa-solid fa-trash-can me-1"></i> </button>
-                                        </form>
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-0 rounded-end">
+                                                @if ($pub->status == 0)
+                                                    delete
+                                                @else
+                                                    Inactivate
+                                                @endif
+                                            </button>
                                     </div>
                                 </td>
                             </tr>

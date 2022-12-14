@@ -15,19 +15,19 @@ class CreateServiceRecordsTable extends Migration
     {
         Schema::create('service_records', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('dep_id')->nullable();
-            $table->string('from');
-            $table->string('to');
-            $table->string('status');
-            $table->string('salary');
-            $table->string('station');
-            $table->string('wo_pay');
-            $table->string('date');
-            $table->string('cause');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('dep_id');
+            $table->string('from')->nullable();
+            $table->string('to')->nullable();
+            $table->string('status')->nullable();
+            $table->string('salary')->nullable();
+            $table->string('station')->nullable();
+            $table->string('wo_pay')->nullable();
+            $table->string('date')->nullable();
+            $table->string('cause')->nullable();
             $table->timestamps();
 
-            $table->foreign('dep_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('dep_id')->references('id')->on('departments');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

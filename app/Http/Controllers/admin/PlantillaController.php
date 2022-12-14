@@ -73,12 +73,13 @@ class PlantillaController extends Controller
             'EPno' => 'required|min:1|max:50',
             'EPposition' => 'required|min:1|max:50',
             'department' => 'required|max:50',
+            'EPdesignation' => 'required|max:50',
         ]);
         $this->plantilla->EPno =  $request->EPno;
         $this->plantilla->EPposition =  strtoupper($request->EPposition);
         $this->plantilla->dep_id =   $request->department;
+        $this->plantilla->EPdesignation =   $request->EPdesignation;
         if ($request->EPdesignation && $request->incumbent) {
-            $this->plantilla->EPdesignation =   $request->EPdesignation;
             $this->plantilla->user_id =  $request->incumbent;
             $user = $this->user->findOrFail($request->incumbent);
             $user->role = "2";
@@ -140,14 +141,15 @@ class PlantillaController extends Controller
             'EPno' => 'required|min:1|max:50',
             'EPposition' => 'required|min:1|max:50',
             'department' => 'required|max:50',
+            'EPdesignation' => 'required|max:50',
         ]);
         $plantilla =  $this->plantilla->findOrFail($id);
         ;
         $plantilla->EPno =  $request->EPno;
         $plantilla->EPposition =  strtoupper($request->EPposition);
         $plantilla->dep_id =   $request->department;
-        if ($request->EPdesignation && $request->incumbent) {
-            $plantilla->EPdesignation =   $request->EPdesignation;
+        $plantilla->EPdesignation =   $request->EPdesignation;
+        if ($request->incumbent) {
             $plantilla->user_id =  $request->incumbent;
             $user = $this->user->findOrFail($request->incumbent);
             $user->role = "2";

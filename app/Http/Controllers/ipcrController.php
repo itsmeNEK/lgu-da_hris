@@ -25,14 +25,10 @@ class ipcrController extends Controller
     public function index()
     {
 
-        $all_user = $this->user
-        ->where('role','!=','0')
-        ->where('role','!=','1')
-        ->where('role','!=','6')
-        ->get();
+        $all_user = $this->user->EMP()->get();
 
         $all_ipcr = $this->ipcr->latest()->paginate(20);
-        return view('hr.pms')
+        return view('hr.pms.addPMS')
         ->with('all_user',$all_user)
         ->with('all_ipcr',$all_ipcr);
     }

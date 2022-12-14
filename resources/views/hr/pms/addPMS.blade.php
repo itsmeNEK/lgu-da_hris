@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-12 col-md">
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" name="from" id="from" placeholder="From">
+                            <input type="month" class="form-control" name="from" id="from" placeholder="From">
                             <label for="formId1">From</label>
                         </div>
                         @error('from')
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-12 col-md">
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" name="to" id="to" placeholder="To">
+                            <input type="month" class="form-control" name="to" id="to" placeholder="To">
                             <label for="formId1">To</label>
                         </div>
                         @error('to')
@@ -77,49 +77,6 @@
                     <button class="btn btn-success fw-bold w-100"><i class="fa-solid fa-plus me-1"></i>Add</button>
                 </p>
             </form>
-            <hr>
-            <div class="table-responsive" id="no-more-tables">
-                <table class="table table-hover table-striped smnall table-sm text-center">
-                    <thead>
-                        <tr class="table-success">
-                            <th class="numeric" width="20%">Employee</th>
-                            <th class="numeric" width="10%">From</th>
-                            <th class="numeric" width="10%">to</th>
-                            <th class="numeric" width="20%">Rating</th>
-                            <th class="numeric" width="20%">Equivalent</th>
-                            <th class="numeric" width="10%"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        @forelse ($all_ipcr as $ipcr)
-                            <tr>
-                                <td>{{ $ipcr->user->first_name . ' ' . $ipcr->user->last_name }}</td>
-                                <td>{{ $ipcr->from }}</td>
-                                <td>{{ $ipcr->to }}</td>
-                                <td>{{ $ipcr->rating }}</td>
-                                <td>{{ $ipcr->equivalent }}</td>
-                                <td>
-                                    <form action="#" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"><i
-                                                class="fa-solid fa-trash-can me-1"></i> </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="9" class="text-center">No Records</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
-                    {{ $all_ipcr->links('pagination.custom') }}
-                </div>
-            </div>
         </div>
     </div>
-
-
 @endsection

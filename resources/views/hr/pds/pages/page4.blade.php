@@ -886,7 +886,7 @@
             <td colspan=2 class=xl27721260>Government Issued ID:<span style='mso-spacerun:yes'></span></td>
             <td class=xl16521260 style=";font-size: 10px;">
                 @if ($user->pdsOther)
-                    <strong>{{ $user->pdsOther->IDa1 }}</strong>
+                    <strong>{{ Crypt::decrypt($user->pdsOther->IDa1) }}</strong>
                     @endif | @if ($user->pdsOther)
                         <strong>{{ $user->pdsOther->IDa2 }}</strong>
                     @endif
@@ -903,7 +903,7 @@
                 style='border-bottom:.5pt solid black;
       border-top:none;font-size: 10px;'>
                 @if ($user->pdsOther)
-                    <strong>{{ $user->pdsOther->IDb1 }}</strong>
+                    <strong>{{ Crypt::decrypt($user->pdsOther->IDb1) }}</strong>
                     @endif | @if ($user->pdsOther)
                         <strong>{{ $user->pdsOther->IDb2 }}</strong>
                     @endif
@@ -929,7 +929,7 @@
                 style='border-bottom:1.0pt solid black;
       border-top:none;font-size: 10px;'>
                 @if ($user->pdsOther)
-                    <strong>{{ $user->pdsOther->IDc1 }}</strong>
+                    <strong>{{ Crypt::decrypt($user->pdsOther->IDc1) }}</strong>
                     @endif | @if ($user->pdsOther)
                         <strong>{{ $user->pdsOther->IDc2 }}</strong>
                     @endif

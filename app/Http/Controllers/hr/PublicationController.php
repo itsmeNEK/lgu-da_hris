@@ -28,8 +28,8 @@ class PublicationController extends Controller
         $all_department = $this->department->get();
         $publication = $this->publication->paginate(10);
         return view('hr.publication')
-        ->with('all_department',$all_department)
-        ->with('publication',$publication)
+        ->with('all_department', $all_department)
+        ->with('publication', $publication)
         ->with('edit_pub', null);
     }
 
@@ -106,7 +106,7 @@ class PublicationController extends Controller
         $publication = $this->publication->paginate(10);
         $edit_pub = $this->publication->findOrFail($id);
         return view('hr.publication')
-        ->with('publication',$publication)
+        ->with('publication', $publication)
         ->with('edit_pub', $edit_pub);
     }
 
@@ -119,7 +119,6 @@ class PublicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'title' => 'required',
             'itemno' => 'required',
@@ -163,13 +162,24 @@ class PublicationController extends Controller
      */
     public function destroy($id)
     {
-
-        if ($this->publication->destroy($id)) {
-            Session::flash('alert', 'success|Record has been Deleted');
-            return redirect()->back();
+        $pub = $this->publication->findOrFail($id);
+        if ($pub->status == 0) {
+            $pub->status = 0;
+            if ($pub->save()) {
+                Session::flash('alert', 'success|Record has been Deleted');
+                return redirect()->back();
+            } else {
+                Session::flash('alert', 'danger|Record not Deleted');
+                return redirect()->back();
+            }
         } else {
-            Session::flash('alert', 'danger|Record not Deleted');
-            return redirect()->back();
+            if ($this->publication->findOrFail($id)) {
+                Session::flash('alert', 'success|Record has been Deleted');
+                return redirect()->back();
+            } else {
+                Session::flash('alert', 'danger|Record not Deleted');
+                return redirect()->back();
+            }
         }
     }
 }

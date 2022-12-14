@@ -38,7 +38,7 @@ class LearningDevelopment extends Controller
     public function create()
     {
         $learningdevelopment = $this->learningdevelopment->paginate(20);
-        return view('hr.lnd')->with('learningdevelopment', $learningdevelopment);
+        return view('hr.lnd.lnd')->with('learningdevelopment', $learningdevelopment);
     }
 
     /**

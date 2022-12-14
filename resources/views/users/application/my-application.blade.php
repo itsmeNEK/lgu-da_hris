@@ -45,7 +45,8 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="/users/application/{{ $app->publication->id }}/edit/{{ $app->id }}"
                                             class="btn btn-warning fw-bold btn-sm text-white">View</a>
-                                        @if ($app->trashed())
+                                        @if ($app->status == 2)
+                                        @elseif ($app->trashed())
                                             <form action="{{ route('users.application.resubmit', $app->id) }}"
                                                 method="POST">
                                                 @csrf

@@ -71,8 +71,6 @@ class ServiceRecord extends Controller
             'status' => 'required',
             'station' => 'required',
             'salary' => 'required',
-            'date' => 'required',
-            'cause' => 'required',
         ]);
         $this->service->user_id = $request->user_id;
         $this->service->dep_id = $request->department;

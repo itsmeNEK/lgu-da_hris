@@ -163,12 +163,24 @@ class application extends Controller
      */
     public function destroy($id)
     {
-        if ($this->application->destroy($id)) {
-            Session::flash('alert', 'success|Application has been Canceled');
-            return redirect()->route('users.application.index');
-        } else {
-            Session::flash('alert', 'danger|Application has not been Canceled');
-            return back();
+        $app = $this->application->findOrFail($id);
+        if(Auth::user()->role == 0 || Auth::user()->role == 4){
+            $app->status = 2;
+            if ($app->save()) {
+                Session::flash('alert', 'success|Application has been Rejected');
+                return redirect()->route('users.application.index');
+            } else {
+                Session::flash('alert', 'danger|Application has not been Rejected');
+                return back();
+            }
+        }else{
+            if ($app->destroy($id)) {
+                Session::flash('alert', 'success|Application has been Deleted');
+                return redirect()->route('users.application.index');
+            } else {
+                Session::flash('alert', 'danger|Application has not been Deleted');
+                return back();
+            }
         }
     }
 

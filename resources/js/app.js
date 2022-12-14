@@ -11,6 +11,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 Vue.component('pds-component', require('./views/pds.vue').default);
+Vue.component('bell-component', require('./views/bell.vue').default);
 
 
 // pagination

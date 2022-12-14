@@ -124,6 +124,9 @@
                 @empty
                     <h2 class="text-center">No Vacant Position Yet</h2>
                 @endforelse
+                <div class="d-flex justify-content-center">
+                    {{ $publication->links('pagination.custom') }}
+                </div>
             </div>
         </div>
     </div>

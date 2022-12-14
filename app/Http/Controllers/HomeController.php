@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $publication = $this->publication->get();
+        $publication = $this->publication->where('status','1')->paginate(12);
         return view('publication')->with('publication',$publication);
     }
 }

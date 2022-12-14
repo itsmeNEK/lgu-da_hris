@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\hr\Publication;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
@@ -20,20 +22,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             referenceSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            SampleSeeder::class,
         ]);
-
-        $faker = Faker::create();
-        $gender = $faker->randomElement(['male', 'female']);
-    	foreach (range(1,200) as $index) {
-            DB::table('users')->insert([
-                'first_name' => $faker->firstName($gender),
-                'last_name' => $faker->lastName($gender),
-                'email' => $faker->email,
-                'password' => Hash::make("kenken12345"),
-                'role' => rand(1,5),
-                'avatar' => "avatar.png",
-            ]);
-        }
     }
 }
