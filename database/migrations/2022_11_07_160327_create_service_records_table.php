@@ -16,7 +16,7 @@ class CreateServiceRecordsTable extends Migration
         Schema::create('service_records', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('dep_id');
+            $table->unsignedBigInteger('plantilla_id');
             $table->string('from')->nullable();
             $table->string('to')->nullable();
             $table->string('status')->nullable();
@@ -27,7 +27,7 @@ class CreateServiceRecordsTable extends Migration
             $table->string('cause')->nullable();
             $table->timestamps();
 
-            $table->foreign('dep_id')->references('id')->on('departments');
+            $table->foreign('plantilla_id')->references('id')->on('employee_plantillas')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

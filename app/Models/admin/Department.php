@@ -13,7 +13,7 @@ class Department extends Model
 
     public function plantilla()
     {
-        return $this->hasMany(EmployeePlantilla::class);
+        return $this->hasMany(EmployeePlantilla::class,'dep_id');
     }
 
     public function service()

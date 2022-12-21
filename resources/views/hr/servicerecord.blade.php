@@ -51,7 +51,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-warning" title="Print Service Record"><i
+                                    <a target="_blank" href="{{ route('hr.service.edit',$user->id) }}" class="btn btn-warning" title="Print Service Record"><i
                                             class="fa-solid fa-print"></i></a>
                                     <a href="{{ route('hr.service.show', $user->id) }}" class="btn btn-success" title="Open Service Record">
                                         <i class="fa-solid fa-pen-to-square"></i></a>

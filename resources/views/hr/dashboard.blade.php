@@ -117,7 +117,7 @@
                                 @endif
                             </td>
                             <td data-title="Print">
-                                <a href="" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-print me-1"></i> COE</a>
+                                <a target="_blank" href="{{ route('hr.dashboard.show',$user->id) }}" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-print me-1"></i> COE</a>
                                 {{-- <a href="" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-user-minus me-1"></i>Retired</a> --}}
                             </td>
                         </tr>

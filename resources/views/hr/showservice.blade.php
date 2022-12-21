@@ -17,7 +17,7 @@
                 </nav>
             </div>
             <div class="col text-end">
-                <a href="#" class="btn btn-outline-success">Print Service Record</a>
+                <a target="_blank" href="{{ route('hr.service.edit',$user->id) }}" class="btn btn-outline-success">Print Service Record</a>
             </div>
         </div>
         <hr>
@@ -50,21 +50,8 @@
                         </div>
                         <div class="col-12 col-md mb-3">
                             <div class="form-floating">
-                                <select class="form-select @error('department') is-invalid @enderror"
-                                    id="floatingSelect"name="department" aria-label="Floating label select example">
-                                    <option value="" hidden>Select Designation</option>
-                                    @foreach ($all_department as $dep)
-                                        @if ($user->empPlantilla)
-                                            <option value="{{ $user->empPlantilla->department->id }}" selected>
-                                                {{ $dep->name }}
-                                            </option>
-                                        @else
-                                            <option value="{{ $dep->id }}">
-                                                {{ $dep->name }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                                <input type="text" hidden name="EPposition" value="{{ $user->empPlantilla->id }}">
+                                <input class="form-control @error('department') is-invalid @enderror" name="department" value="{{ $user->empPlantilla->EPposition }}">
                                 <label for="Incumbent" class="form-label">Designation</label>
                             </div>
                         </div>
@@ -156,21 +143,23 @@
                                     <th class="numeric">Designation</th>
                                     <th class="numeric">Status</th>
                                     <th class="numeric">Salary</th>
+                                    <th class="numeric">Station</th>
                                     <th class="numeric">Date</th>
                                     <th class="numeric">Cause</th>
                                     <th class="numeric" width="5%"></th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                @forelse ($service as $ser)
+                                @forelse ($service as $item)
                                     <tr>
-                                        <td>{{ $ser->from }}</td>
-                                        <td>{{ $ser->to }}</td>
-                                        <td>{{ $ser->department->name }}</td>
-                                        <td>{{ $ser->status }}</td>
-                                        <td>{{ $ser->salary }}</td>
-                                        <td>{{ $ser->date }}</td>
-                                        <td>{{ $ser->cause }}</td>
+                                        <td>{{ $item->from }}</td>
+                                        <td>{{ $item->to }}</td>
+                                        <td>{{ $item->empPlantilla->EPposition }}</td>
+                                        <td>{{ $item->status }}</td>
+                                        <td>{{ $item->salary }}</td>
+                                        <td>{{ $item->station }}</td>
+                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->cause }}</td>
 
                                         <td>
                                             <a href="#" class="btn btn-danger"><i

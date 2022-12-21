@@ -14,10 +14,15 @@ use App\Http\Controllers\hr\InterviewExamController;
 use App\Http\Controllers\hr\LeaveRecordController;
 use App\Http\Controllers\hr\loyaltyAwardController;
 use App\Http\Controllers\hr\ManageApplicantsController;
-use App\Http\Controllers\hr\pdsController;
+use App\Http\Controllers\hr\printingController;
 use App\Http\Controllers\hr\PublicationController;
 use App\Http\Controllers\hr\RangkingController;
 use App\Http\Controllers\hr\ServiceRecord;
+use App\Http\Controllers\hr\surveyAnswerController;
+use App\Http\Controllers\hr\surveyFormController;
+use App\Http\Controllers\hr\surveyQuestionController;
+use App\Http\Controllers\hr\surveyResultController;
+use App\Http\Controllers\hr\suveryQuestionController;
 use App\Http\Controllers\hr\top5Controller;
 use App\Http\Controllers\hr\TrainingNeedsController;
 use App\Http\Controllers\ipcrController;
@@ -94,6 +99,10 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5','middleware'
         Route::resource('/lnd', LearningDevelopment::class);
         Route::resource('/trainingneeds', TrainingNeedsController::class);
         Route::resource('/assessment', AssessmentController::class);
+        Route::resource('/surveyQuestion', surveyQuestionController::class);
+        Route::resource('/surveyForm', surveyFormController::class);
+        Route::resource('/surveyAnswer', surveyAnswerControllerController::class);
+        Route::resource('/surveyResult', surveyResultController::class);
         // lnd
 
         // pms
@@ -121,6 +130,7 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5','middleware'
         Route::resource('/publication', PublicationController::class);
         Route::resource('/service', ServiceRecord::class);
         Route::resource('/dashboard', dashboard::class);
+        Route::resource('/printing', printingController::class);
         // hr stuff
 
     });

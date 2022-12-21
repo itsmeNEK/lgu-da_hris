@@ -2,6 +2,7 @@
 
 namespace App\Models\admin;
 
+use App\Models\hr\surveyForm;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,4 +21,12 @@ class EmployeePlantilla extends Model
     public function designation(){
         return $this->belongsTo(Department::class,'EPdesignation');
     }
+    public function surveyForm(){
+        return $this->hasMany(surveyForm::class,'plantilla_id');
+    }
+
+    public function hasSurveyForm(){
+        return $this->hasMany(surveyForm::class,'plantilla_id')->exists();
+    }
+
 }

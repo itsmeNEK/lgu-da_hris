@@ -41,7 +41,7 @@ class loyaltyAwardController extends Controller
         foreach ($all_users as $user) {
             $service_record = $this->service_record->where('user_id', $user->id)->first();
             if ($service_record) {
-                $from_whole = Carbon::createFromFormat('Y-m-d', $user->serviceRecord->from);
+                $from_whole = Carbon::createFromFormat('Y-m-d', $service_record->from);
                 $now_whole = Carbon::createFromFormat('Y-m-d H:i:s', now());
 
                 $from = $from_whole->year;
@@ -70,14 +70,14 @@ class loyaltyAwardController extends Controller
                 $next_loyalty = $from_whole->addYears($next_time);
                 if($user->hasloyaltyRecord()){
                     $LR = $this->loyaltyRecord->where('user_id',$user->id)->first();
-                    $LR->from = $user->serviceRecord->from;
+                    $LR->from = $service_record->from;
                     $LR->year_difference = $difference;
                     $LR->next_loyalty = $next_loyalty;
                     $LR->times = $times;
                     $LR->save();
                 }else{
                     $this->loyaltyRecord->user_id = $user->id;
-                    $this->loyaltyRecord->from = $user->serviceRecord->from;
+                    $this->loyaltyRecord->from = $service_record->from;
                     $this->loyaltyRecord->year_difference = $difference;
                     $this->loyaltyRecord->next_loyalty = $next_loyalty;
                     $this->loyaltyRecord->times = $times;

@@ -2,7 +2,7 @@
 
     <table border=0 cellpadding=0 cellspacing=0 class=xl6528742
         style="width: inherit; max-height: 1500px; border-collapse:collapse;table-layout:fixed;">
-        <col class=xl6528742 width=26 style='mso-width-source:userset;mso-width-alt:
+        {{-- <col class=xl6528742 width=26 style='mso-width-source:userset;mso-width-alt:
              950;width:20pt'>
         <col class=xl6528742 width=214 style='mso-width-source:userset;mso-width-alt:
              7826;width:161pt'>
@@ -22,7 +22,7 @@
         <col class=xl6528742 width=32 style='mso-width-source:userset;mso-width-alt:
              1170;width:23pt'>
         <col class=xl6528742 width=183 style='mso-width-source:userset;mso-width-alt:
-             6692;width:137pt'>
+             6692;width:137pt'> --}}
         <tr height=4 style='mso-height-source:userset;height:3.0pt'>
             <td colspan=11 height=4 class=xl12328742 width=936
                 style='border-right:1.0pt solid black;

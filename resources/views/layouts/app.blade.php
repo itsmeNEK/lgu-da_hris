@@ -27,14 +27,6 @@
         <link href="{{ asset('storage/css/navbar.css') }}" rel="stylesheet">
     @endif
     @yield('customCSS')
-    <style>
-        body {
-            font-family: 'Trebuchet MS', sans-serif;
-            width: 100vw;
-            overflow-x: hidden;
-        }
-    </style>
-
 </head>
 
 <body class="bg-white">
@@ -44,7 +36,9 @@
                 <a class="navbar-brand d-inline-block text-truncate" href="{{ url('/') }}">
                     <img src="{{ asset('images/DA-logo.png') }}" width="50" height="45"
                         class="d-inline-block align-text-middle">
-                    {{ config('app.name') }}
+                    <span class="navbar-brand-text">
+                        {{ config('app.name') }}
+                    </span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -58,6 +52,9 @@
                         <li class="nav-item">
                             <a href="/" class="nav-link">Publication</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">How to?</a>
+                        </li>
                         @if (Auth::user())
                             <hr class=" d-block d-md-none">
                             <li class="nav-item d-block d-md-none">
@@ -67,7 +64,9 @@
                                 @can('isUser')
                                     <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
                                 @else
-                                    <a href="{{ route('users.files.index') }}" class="nav-link">My Files</a>
+                                    <a href="#" class="nav-link">Survey</a>
+                                    <a href="{{ route('users.files.index') }}" class="nav-link">My Record</a>
+                                    <a href="{{ route('users.files.create') }}" class="nav-link">My Files</a>
                                     <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
                                 @endcan
                             </li>
@@ -153,6 +152,7 @@
                                         <a href="{{ route('users.application.index') }}" class="dropdown-item">My
                                             Applications</a>
                                     @else
+                                    <a href="#" class="dropdown-item">Survey</a>
                                         <a href="{{ route('users.files.index') }}" class="dropdown-item">My Records</a>
                                     @endcan
                                     <p class="dropdown-divider"></p>
@@ -223,6 +223,10 @@
                                                     <i class="fa-solid fa-briefcase me-1"></i>My Application
                                                 </a>
                                             @else
+                                            <a href="#"
+                                                class="list-group-item list-group-item-action border-0">
+                                                <i class="fa-solid fa-circle-question me-1"></i>Survey
+                                            </a>
                                                 <a href="{{ route('users.files.index') }}"
                                                     class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-briefcase me-1"></i>My Records
@@ -287,6 +291,14 @@
                                                         href="{{ route('hr.lnd.create') }}"><i
                                                             class="fa-solid fa-globe me-2"></i>All</a>
                                                     <a class="list-group-item list-group-item-action border-0"
+                                                        href="{{ route('hr.surveyQuestion.index') }}">
+                                                        <i class="fa-solid fa-person-circle-question me-2"></i>Survey Question</a>
+                                                    <a class="list-group-item list-group-item-action border-0"
+                                                        href="{{ route('hr.surveyForm.index') }}"><i class="fa-solid fa-file-circle-question me-2"></i>Survey Form</a>
+                                                        <a class="list-group-item list-group-item-action border-0"
+                                                        href=""><i
+                                                        class="fa-solid fa-clipboard-question me-2"></i>Survey Result</a>
+                                                    <a class="list-group-item list-group-item-action border-0"
                                                         href="{{ route('hr.trainingneeds.index') }}"><i
                                                             class="fa-solid fa-person-dots-from-line me-2"></i>Training Need
                                                         Analysis</a>
@@ -312,7 +324,8 @@
                                                             class="fa-solid fa-user-tag me-2"></i>loyalty
                                                         award</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="{{ route('hr.top5.index') }}"><i class="fa-solid fa-envelopes-bulk me-2"></i>Top 5 Offices</a>
+                                                        href="{{ route('hr.top5.index') }}"><i
+                                                            class="fa-solid fa-envelopes-bulk me-2"></i>Top 5 Offices</a>
                                                 </div>
                                             </div>
                                             <hr class="text-dark">
@@ -337,6 +350,10 @@
                                                 <a href="{{ route('hr.publication.index') }}"
                                                     class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-upload me-1"></i>Publication
+                                                </a>
+                                                <a href="{{ route('hr.printing.index') }}"
+                                                    class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-print me-1"></i>Printing
                                                 </a>
                                             </div>
                                         @endcanany

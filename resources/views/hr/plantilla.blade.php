@@ -91,7 +91,7 @@
             <p class="float-start h3 m-0">Employee Plantilla
             </p>
             <p class="float-end m-0">
-                <a href="" class="btn btn-success"><i class="fa-solid fa-print me-1"></i>Print All Plantilla</a>
+                <a target="_blank" href="{{ route('hr.plantilla.create') }}" class="btn btn-success"><i class="fa-solid fa-print me-1"></i>Print All Plantilla</a>
             </p>
             @if ($edit_plan)
                 <form action="{{ route('hr.plantilla.update', $edit_plan->id) }}" method="POST">

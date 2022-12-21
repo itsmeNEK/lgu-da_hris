@@ -7,6 +7,7 @@ use App\Models\hr\ServiceRecord as HrServiceRecord;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\admin\Department;
+use App\Models\admin\EmployeePlantilla;
 use Illuminate\Support\Facades\Session;
 
 class ServiceRecord extends Controller
@@ -14,12 +15,14 @@ class ServiceRecord extends Controller
     private $users;
     private $service;
     private $department;
+    private $employeePlantilla;
 
-    public function __construct(User $users,HrServiceRecord $service, Department $department)
+    public function __construct(User $users, HrServiceRecord $service, Department $department, EmployeePlantilla $employeePlantilla)
     {
         $this->users = $users;
         $this->service = $service;
         $this->department = $department;
+        $this->employeePlantilla = $employeePlantilla;
     }
     /**
      * Display a listing of the resource.
@@ -30,8 +33,8 @@ class ServiceRecord extends Controller
     {
         if ($request->search) {
             $users = $this->users
-            ->where('first_name','like','%'.$request->search.'%')
-            ->orwhere('last_name','like','%'.$request->search.'%')
+            ->where('first_name', 'like', '%'.$request->search.'%')
+            ->orwhere('last_name', 'like', '%'.$request->search.'%')
             ->EMP()
             ->latest()
             ->paginate(30);
@@ -53,7 +56,6 @@ class ServiceRecord extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -67,13 +69,13 @@ class ServiceRecord extends Controller
         $request->validate([
             'from' => 'required|date',
             'to' => 'required|date',
-            'department' => 'required',
             'status' => 'required',
             'station' => 'required',
             'salary' => 'required',
         ]);
+
         $this->service->user_id = $request->user_id;
-        $this->service->dep_id = $request->department;
+        $this->service->plantilla_id = $request->EPposition;
         $this->service->from = $request->from;
         $this->service->to = $request->to;
         $this->service->status = $request->status;
@@ -90,7 +92,6 @@ class ServiceRecord extends Controller
             Session::flash('alert', 'danger|Service Record has not Saved!');
         }
         return redirect()->back();
-
     }
 
     /**
@@ -102,12 +103,12 @@ class ServiceRecord extends Controller
     public function show($id)
     {
         $user = $this->users->findOrFail($id);
-        $service = $this->service->where('user_id',$id)->paginate(20);
+        $service = $this->service->where('user_id', $id)->paginate(20);
         $all_department = $this->department->get();
         return view('hr.showservice')
-        ->with('service',$service)
-        ->with('all_department',$all_department)
-        ->with('user',$user);
+        ->with('service', $service)
+        ->with('all_department', $all_department)
+        ->with('user', $user);
     }
 
     /**
@@ -118,7 +119,8 @@ class ServiceRecord extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->users->findOrFail($id);
+        return view('print.serviceRecord')->with('user', $user);
     }
 
     /**

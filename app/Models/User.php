@@ -187,7 +187,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function serviceRecord()
     {
-        return $this->hasOne(ServiceRecord::class, 'user_id');
+        return $this->hasMany(ServiceRecord::class, 'user_id');
     }
 
     public function loyaltyRecord()
@@ -214,6 +214,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function havePDS()
     {
         return $this->pdsPersonal()->where('user_id', Auth::user()->id)->exists();
+    }
+    public function hasServiceRecord($id)
+    {
+        return $this->serviceRecord()->where('user_id', $id)->exists();
     }
     public function empWithPlantilla($id)
     {

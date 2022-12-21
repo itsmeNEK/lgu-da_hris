@@ -5,56 +5,26 @@ namespace App\Http\Controllers\hr;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 
-class dashboard extends Controller
+class printingController extends Controller
 {
-    private $users;
-    public function __construct(User $users)
+    private $user;
+    public function __construct(User $user)
     {
-        $this->users = $users;
+        $this->user = $user;
     }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->search) {
-            $users = $this->users
-            ->where('first_name','like','%'.$request->search.'%')
-            ->orwhere('last_name','like','%'.$request->search.'%')
-            ->EMP()
-            ->latest()
-            ->paginate(20);
-        } else {
-            $users = $this->users
-            ->EMP()
-            ->latest()
-            ->paginate(20);
-        }
-        $all_users = $this->users
-        ->EMP()
-        ->get();
-        $total_online_emp = 0;
-        foreach ($all_users as $user) {
-            if (Cache::has('user-is-online-' . $user->id)) {
-                $total_online_emp++;
-            }
-        }
 
-        $user_count = [
-            'total_user'=> count($all_users),
-            'total_online_emp'=> $total_online_emp,
-        ];
+        $all_user = $this->user->EMP()->get();
 
-        return view('hr.dashboard')
-        ->with('user_count', $user_count)
-        ->with('users', $users)
-        ->with('all_users', $all_users)
-        ;
+        return view('print.index')
+        ->with('all_user',$all_user);
     }
 
     /**
@@ -86,8 +56,7 @@ class dashboard extends Controller
      */
     public function show($id)
     {
-        $user = $this->users->findOrFail($id);
-        return view('print.certificateEmp')->with('user', $user);
+        //
     }
 
     /**

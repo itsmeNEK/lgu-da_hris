@@ -1,8 +1,8 @@
 <div id="pdsCLean_10301" align=center x:publishsource="Excel">
 
     <table border=0 cellpadding=0 cellspacing=0 width=825 class=xl6610301
-        style='border-collapse:collapse;table-layout:fixed;width:inherit;'>
-        <col class=xl6610301 width=23 style='mso-width-source:userset;mso-width-alt:
+        style='border-collapse:collapse;table-layout:fixed;width:inherit;padding-0'>
+        {{-- <col class=xl6610301 width=23 style='mso-width-source:userset;mso-width-alt:
              841;width:17pt'>
         <col class=xl6610301 width=44 style='mso-width-source:userset;mso-width-alt:
              1609;width:33pt'>
@@ -26,7 +26,7 @@
         <col class=xl6610301 width=78 style='mso-width-source:userset;mso-width-alt:
              2852;width:59pt'>
         <col class=xl6610301 width=56 style='mso-width-source:userset;mso-width-alt:
-             2048;width:42pt'>
+             2048;width:42pt'> --}}
         <tr height=4 style='mso-height-source:userset;height:3.0pt'>
             <td colspan=13 height=4 class=xl9910301 width=825
                 style='border-right:1.0pt solid black;
