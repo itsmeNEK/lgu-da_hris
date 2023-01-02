@@ -15,4 +15,8 @@ class surveyFormDetails extends Model
     public function surveyQuestion(){
         return $this->belongsTo(surveyQuestion::class,'question_id');
     }
+
+    public function surveyAnswerDetails(){
+        return $this->hasOne(surveyAnswerDetails::class,'formDetails_id');
+    }
 }

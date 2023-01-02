@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\hr;
 
 use App\Http\Controllers\Controller;
+use App\Models\hr\surveyAnswer;
+use App\Models\hr\surveyForm;
 use Illuminate\Http\Request;
 
 class surveyResultController extends Controller
 {
+    private $surveyAnswer;
+    private $surveyForm;
+
+    public function __construct(surveyAnswer $surveyAnswer,surveyForm $surveyForm)
+    {
+        $this->surveyAnswer = $surveyAnswer;
+        $this->surveyForm = $surveyForm;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,7 @@ class surveyResultController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -46,7 +56,9 @@ class surveyResultController extends Controller
      */
     public function show($id)
     {
-        //
+        $surveyForm = $this->surveyForm->findOrFail($id);
+
+        return view('hr.lnd.surveyResultView')->with('surveyForm',$surveyForm);
     }
 
     /**
@@ -57,7 +69,9 @@ class surveyResultController extends Controller
      */
     public function edit($id)
     {
-        //
+        $surveyAnswer = $this->surveyAnswer->findOrFail($id);
+
+        return view('print.surveyResultPrint')->with('surveyAnswer',$surveyAnswer);
     }
 
     /**

@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-11 col-md border border-1 rounded m-1">
+                {{-- <div class="col-11 col-md border border-1 rounded m-1">
                     <p class="text-center">Force Leave Balance</p>
                     <div class="row justify-content-between">
                         <div class="col">
@@ -138,15 +138,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row m-2">
-                <div class="col">
-                    <button class="btn btn-outline-light w-100">File Leave</button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-outline-light w-100">Service Record</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -163,8 +155,17 @@
             </p>
         </div>
         <div class="col-11 col-lg m-1 bg-success bg-gradient text-white rounded">
-            <p class="h3 text-center mb-3 fw-bold">Leave Credit</p>
-
+            <div class="row m-2">
+                <div class="col">
+                    {{-- <button class="btn btn-outline-light w-100">File Application For Leave</button> --}}
+                </div>
+            </div>
+            <div class="row m-2">
+                <div class="col">
+                    <a target="_blank" href="{{ route('hr.service.edit',Auth::user()->id) }}" class="btn btn-outline-light w-100" title="Print Service Record"><i
+                        class="fa-solid fa-print"></i>Print Service Record</a>
+                </div>
+            </div>
         </div>
     </div>
     {{-- <div class="row">

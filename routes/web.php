@@ -80,6 +80,7 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5','middleware'
         Route::resource('/account', AccountController::class);
         Route::resource('/files', files::class);
         Route::resource('/covid', CovidController::class);
+        Route::resource('/surveyAnswer', surveyAnswerController::class);
 
         // application
         Route::resource('/application', application::class);
@@ -101,7 +102,6 @@ Route::group(['middleware'=>'auth','middleware'=>'role:0,1,2,3,4,5','middleware'
         Route::resource('/assessment', AssessmentController::class);
         Route::resource('/surveyQuestion', surveyQuestionController::class);
         Route::resource('/surveyForm', surveyFormController::class);
-        Route::resource('/surveyAnswer', surveyAnswerControllerController::class);
         Route::resource('/surveyResult', surveyResultController::class);
         // lnd
 

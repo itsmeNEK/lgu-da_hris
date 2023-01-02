@@ -19,9 +19,11 @@ class surveyQuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $all_question = $this->question->all();
+        $all_question = $this->question
+        ->where('type','like','%'.$request->type.'%')
+        ->paginate(20);
         return view('hr.lnd.survey')
         ->with('edit_question', null)
         ->with('all_question', $all_question);

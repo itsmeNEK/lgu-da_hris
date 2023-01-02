@@ -40,7 +40,9 @@ class PublicationController extends Controller
      */
     public function create()
     {
-        //
+        $all_publication = $this->publication->get();
+
+        return view('print.publication')->with('all_publication',$all_publication);
     }
 
     /**

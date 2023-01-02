@@ -15,7 +15,16 @@ class CreateSurveyAnswerDetailsTable extends Migration
     {
         Schema::create('survey_answer_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('answer_id');
+            $table->unsignedBigInteger('formDetails_id');
+            $table->unsignedBigInteger('question_id');
+            $table->string('answer');
+            $table->string('gap');
             $table->timestamps();
+
+            $table->foreign('answer_id')->references('id')->on('survey_answers')->onDelete('cascade');
+            $table->foreign('formDetails_id')->references('id')->on('survey_form_details')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('survey_questions')->onDelete('cascade');
         });
     }
 

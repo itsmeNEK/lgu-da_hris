@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Survey Questions')
+@section('title', 'Self Assessment Questions')
 @section('content')
     <div class="row justify-content-center">
-        <h3>Survey Questions</h3>
+        <h3>Self Assessment Questions</h3>
         <div class="col-12 col-md-10 mt-3">
 
-            <h4 class="text-center">Adding of Survey Questions</h4>
+            <h4 class="text-center">Adding of Self Assessment Questions</h4>
 
             @if ($edit_question)
                 <form action="{{ route('hr.surveyQuestion.update', $edit_question->id) }}" method="POST">
@@ -35,7 +35,8 @@
                 </div>
                 <div class="col-12 mb-2 col-md">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control  @error('question') is-invalid @enderror" name="question" id="question" placeholder="Question"
+                        <input type="text" class="form-control  @error('question') is-invalid @enderror" name="question"
+                            id="question" placeholder="Question"
                             @if ($edit_question) value="{{ old('question', $edit_question->question) }}"
                         @else
                         value="{{ old('question') }}" @endif
@@ -65,6 +66,25 @@
 
             <hr>
             <h2>All Questions</h2>
+            <div class="row justify-content-end">
+                <div class="col-12 col-md-4">
+                    <form action="{{ route('hr.surveyQuestion.index') }}" method="get">
+                        @csrf
+                        <div class="input-group">
+                                <select name="type" id="type" class="form-control form-control-sm"
+                                placeholder="Select type">
+                                <option value="">All Type</option>
+                                <option value="Core Competencies">Core Competencies</option>
+                                <option value="Organizational Competencies">Organizational Competencies</option>
+                                <option value="Technical Competencies">Technical Competencies</option>
+                                <option value="Leadership Competencies">Leadership Competencies</option>
+                            </select>
+                            <button class="btn btn-warning text-white fw-bold"><i
+                                    class="fa-solid fa-magnifying-glass me-1"></i>Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="table-responsive mt-5 " id="no-more-tables">
                 <table class="table table-hover table-striped smnall table-sm text-center">
                     <thead>
@@ -80,17 +100,7 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td data-title="Type">
-                                    @if ($item->type == 1)
-                                        Core Competencies
-                                    @elseif ($item->type == 2)
-                                        Organizational Competencies
-                                    @elseif ($item->type == 3)
-                                        Leadership Competencies
-                                    @elseif ($item->type == 4)
-                                        Technical Competencies
-                                    @else
-                                        -
-                                    @endif
+                                    {{ $item->type }}
                                 </td>
                                 <td data-title="Question">
                                     {{ $item->question }}
@@ -114,6 +124,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
+                    {{ $all_question->links('pagination.custom') }}
                 </div>
             </div>
 

@@ -3,7 +3,7 @@
 @section('title', 'Login')
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center my-auto mx-auto">
             <div class="col-md-6">
                 <div class="card shadow">
                     <div class="card-header bg-white text-center border-0">

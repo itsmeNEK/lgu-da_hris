@@ -30,7 +30,8 @@ class SampleSeeder extends Seeder
             $user_id = DB::table('users')->insertGetId([
                 'first_name' => $faker->firstName($gender),
                 'last_name' => $faker->lastName($gender),
-                'email' => $faker->email,
+                'email' => $faker->firstName($gender) ." " . $faker->lastName($gender)."@gmail.com",
+                // 'email' => $faker->firstName($gender) $faker->firstName($gender) $faker->email,
                 'email_verified_at' => now(),
                 'password' => Hash::make("kenken"),
                 'role' => rand(1, 5),

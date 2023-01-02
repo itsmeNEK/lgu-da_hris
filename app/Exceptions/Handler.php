@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class Handler extends ExceptionHandler
 {
@@ -36,6 +37,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (\Exception $e) {
+
             if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
                 if (Auth::check()) {
                     return redirect()->route('users.pds.index');
@@ -45,4 +47,5 @@ class Handler extends ExceptionHandler
             };
         });
     }
+
 }

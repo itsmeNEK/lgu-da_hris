@@ -64,7 +64,8 @@
                                 @can('isUser')
                                     <a href="{{ route('users.application.index') }}" class="nav-link">My Applications</a>
                                 @else
-                                    <a href="#" class="nav-link">Survey</a>
+                                    <a href="{{ route('users.surveyAnswer.index') }}" class="nav-link">Self Assesment</a>
+                                    {{-- <a href="{{ route('users.surveyAnswer.index') }}" class="nav-link">Self Assesment Compliance</a> --}}
                                     <a href="{{ route('users.files.index') }}" class="nav-link">My Record</a>
                                     <a href="{{ route('users.files.create') }}" class="nav-link">My Files</a>
                                     <a href="{{ route('users.covid.index') }}" class="nav-link">Covid 19 Response</a>
@@ -152,7 +153,8 @@
                                         <a href="{{ route('users.application.index') }}" class="dropdown-item">My
                                             Applications</a>
                                     @else
-                                    <a href="#" class="dropdown-item">Survey</a>
+                                        <a href="{{ route('users.surveyAnswer.index') }}" class="dropdown-item">Self Assesment</a>
+                                        {{-- <a href="{{ route('users.surveyAnswer.index') }}" class="dropdown-item">Self Assesment Compliance</a> --}}
                                         <a href="{{ route('users.files.index') }}" class="dropdown-item">My Records</a>
                                     @endcan
                                     <p class="dropdown-divider"></p>
@@ -192,14 +194,20 @@
                 </div>
             @endif
         </div>
-        <main class="py-4">
+        <main>
             @guest
-                @yield('content')
+                @if (Route::current()->getName() === 'publication')
+                    @yield('content')
+                @else
+                    <div class="row" style="height: 50vh;">
+                        @yield('content')
+                    </div>
+                @endif
             @else
                 @if (Route::current()->getName() === 'publication')
                     @yield('content')
                 @else
-                    <div>
+                    <div class="py-4">
                         <div class="row justify-content-center">
                             <div class="col-lg-2 d-none d-lg-block">
                                 <div class="card shadow">
@@ -223,10 +231,14 @@
                                                     <i class="fa-solid fa-briefcase me-1"></i>My Application
                                                 </a>
                                             @else
-                                            <a href="#"
-                                                class="list-group-item list-group-item-action border-0">
-                                                <i class="fa-solid fa-circle-question me-1"></i>Survey
-                                            </a>
+                                                <a href="{{ route('users.surveyAnswer.index') }}"
+                                                    class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-circle-question me-1"></i>Self Assesment
+                                                </a>
+                                                {{-- <a href="{{ route('users.surveyAnswer.index') }}"
+                                                    class="list-group-item list-group-item-action border-0">
+                                                    <i class="fa-solid fa-circle-question me-1"></i>Self Assesment Compliance
+                                                </a> --}}
                                                 <a href="{{ route('users.files.index') }}"
                                                     class="list-group-item list-group-item-action border-0">
                                                     <i class="fa-solid fa-briefcase me-1"></i>My Records
@@ -289,22 +301,22 @@
                                                 <div class="collapse ms-2" id="lnd">
                                                     <a class="list-group-item list-group-item-action border-0"
                                                         href="{{ route('hr.lnd.create') }}"><i
-                                                            class="fa-solid fa-globe me-2"></i>All</a>
+                                                            class="fa-solid fa-globe me-2"></i>All Employee Certificates</a>
                                                     <a class="list-group-item list-group-item-action border-0"
                                                         href="{{ route('hr.surveyQuestion.index') }}">
-                                                        <i class="fa-solid fa-person-circle-question me-2"></i>Survey Question</a>
+                                                        <i class="fa-solid fa-person-circle-question me-2"></i>Self Assesment
+                                                        Question</a>
                                                     <a class="list-group-item list-group-item-action border-0"
-                                                        href="{{ route('hr.surveyForm.index') }}"><i class="fa-solid fa-file-circle-question me-2"></i>Survey Form</a>
-                                                        <a class="list-group-item list-group-item-action border-0"
+                                                        href="{{ route('hr.surveyForm.index') }}"><i
+                                                        class="fa-solid fa-person-dots-from-line me-2"></i>Training Need
+                                                            Analysis</a>
+                                                    {{-- <a class="list-group-item list-group-item-action border-0"
                                                         href=""><i
-                                                        class="fa-solid fa-clipboard-question me-2"></i>Survey Result</a>
-                                                    <a class="list-group-item list-group-item-action border-0"
+                                                            class="fa-solid fa-clipboard-question me-2"></i>Self Assesment Result</a> --}}
+                                                    {{-- <a class="list-group-item list-group-item-action border-0"
                                                         href="{{ route('hr.trainingneeds.index') }}"><i
-                                                            class="fa-solid fa-person-dots-from-line me-2"></i>Training Need
-                                                        Analysis</a>
-                                                    <a class="list-group-item list-group-item-action border-0"
-                                                        href="{{ route('hr.assessment.index') }}"><i
-                                                            class="fa-solid fa-check-double me-2"></i>Assessment</a>
+                                                        class="fa-solid fa-check-double me-2"></i>Training Need
+                                                        Analysis Compliance</a> --}}
                                                 </div>
                                                 {{-- R n R --}}
                                                 <a href="#rr" class="list-group-item list-group-item-action border-0"
@@ -313,9 +325,9 @@
                                                     <span class="float-end"><i class="fa-solid fa-caret-down"></i></span>
                                                 </a>
                                                 <div class="collapse ms-2" id="rr">
-                                                    <a class="list-group-item list-group-item-action border-0"
+                                                    {{-- <a class="list-group-item list-group-item-action border-0"
                                                         href=""><i
-                                                            class="fa-solid fa-square-poll-vertical me-2"></i>Survey</a>
+                                                            class="fa-solid fa-square-poll-vertical me-2"></i>Self Assesment</a> --}}
                                                     <a class="list-group-item list-group-item-action border-0"
                                                         href="{{ route('hr.certificates.index') }}"><i
                                                             class="fa-solid fa-certificate me-2"></i>Certificate</a>
@@ -385,7 +397,7 @@
         </main>
     </div>
     <!-- Footer -->
-    <footer class="text-center text-lg-start bg-light text-muted footer mt-auto" style="margin-top: 200px;">
+    <footer class="text-center text-lg-start bg-light text-muted footer" style="margin-top: 200px;">
         <!-- Section: Links  -->
         <section class="">
             <div class="container text-center text-md-start mt-2">
@@ -413,7 +425,7 @@
                         <p><i class="fas fa-home me-3"></i> Delfin Albano, Isabela, Ph</p>
                         <p>
                             <i class="fas fa-envelope me-3"></i>
-                            info@example.com
+                            hris.delfinalbano.isabela@gmail.com
                         </p>
                         <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
                     </div>

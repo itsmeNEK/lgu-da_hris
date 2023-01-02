@@ -7,6 +7,7 @@ use App\Models\hr\InterviewExam;
 use App\Models\hr\LeaveCredit;
 use App\Models\hr\loyaltyRecord;
 use App\Models\hr\ServiceRecord;
+use App\Models\hr\surveyAnswer;
 use App\Models\pds\civilservice;
 use App\Models\pds\educational;
 use App\Models\pds\family;
@@ -210,6 +211,11 @@ class User extends Authenticatable implements MustVerifyEmail
         $work = workexperience::where('user_id', $id)->count();
         return $lnd + $work;
     }
+    public function surveyAnswer()
+    {
+        return $this->hasMany(surveyAnswer::class, 'user_id');
+    }
+
     // exists
     public function havePDS()
     {

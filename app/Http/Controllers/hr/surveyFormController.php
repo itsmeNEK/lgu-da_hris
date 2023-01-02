@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hr;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\Department;
 use App\Models\admin\EmployeePlantilla;
 use App\Models\hr\surveyForm;
 use App\Models\hr\surveyFormDetails;
@@ -16,13 +17,15 @@ class surveyFormController extends Controller
     private $employeePlantilla;
     private $surveyQuestion;
     private $surveyFormDetails;
+    private $department;
 
-    public function __construct(surveyForm $surveyForm, EmployeePlantilla $employeePlantilla, surveyQuestion $surveyQuestion, surveyFormDetails $surveyFormDetails)
+    public function __construct(surveyForm $surveyForm, EmployeePlantilla $employeePlantilla, surveyQuestion $surveyQuestion, surveyFormDetails $surveyFormDetails,Department $department)
     {
         $this->surveyForm = $surveyForm;
         $this->employeePlantilla = $employeePlantilla;
         $this->surveyQuestion = $surveyQuestion;
         $this->surveyFormDetails = $surveyFormDetails;
+        $this->department = $department;
     }
 
 
@@ -33,18 +36,37 @@ class surveyFormController extends Controller
      */
     public function index(Request $request)
     {
-        $all_surveyForm = $this->surveyForm->paginate(20);
+        if($request)
+        {
+        $all_surveyForm = $this->surveyForm
+        ->formFilter($request)
+        ->paginate(20);
+        }else{
 
+        $all_surveyForm = $this->surveyForm
+        ->paginate(20);
+        }
         $all_employeePlantilla = $this->employeePlantilla->all();
+        $department = $this->department->all();
         $Leadership_Question = $this->surveyQuestion
         ->where('type', '=', 'Leadership Competencies')
         ->get();
         $Technical_Question = $this->surveyQuestion
         ->where('type', '=', 'Technical Competencies')
-               ->get();
+        ->get();
+        $Core_Question = $this->surveyQuestion
+        ->where('type', '=', 'Core Competencies')
+        ->get();
+        $Org_Question = $this->surveyQuestion
+        ->where('type', '=', 'Organizational Competencies')
+        ->get();
+
         return view('hr.lnd.surveyForm')
         ->with('Technical_Question', $Technical_Question)
         ->with('Leadership_Question', $Leadership_Question)
+        ->with('department', $department)
+        ->with('Core_Question', $Core_Question)
+        ->with('Org_Question', $Org_Question)
         ->with('all_employeePlantilla', $all_employeePlantilla)
         ->with('edit_form', null)
         ->with('all_surveyForm', $all_surveyForm);
@@ -79,13 +101,15 @@ class surveyFormController extends Controller
             $details = [];
             if ($request->question) {
                 $request->validate([
-                    'question' => 'required|min:1'
+                    'question' => 'required|min:1',
+                    'standard' => 'required|min:1'
                     ]);
                 for ($i = 0; $i < count($request->question); $i++) {
-                    if ($request->question != "") {
+                    if ($request->question != "" && $request->standard != "") {
                         $details[] = [
                             'form_id' => $form->id,
                             'question_id' => $request->question[$i],
+                            'standard' => $request->standard[$i],
                         ];
                     }
                 }
@@ -120,6 +144,7 @@ class surveyFormController extends Controller
     public function edit($id)
     {
         $edit_form = $this->surveyForm->findOrFail($id);
+        $department = $this->department->all();
         $all_surveyForm = $this->surveyForm->paginate(20);
         $all_employeePlantilla = $this->employeePlantilla->all();
         $Leadership_Question = $this->surveyQuestion
@@ -128,10 +153,19 @@ class surveyFormController extends Controller
         $Technical_Question = $this->surveyQuestion
         ->where('type', '=', 'Technical Competencies')
                ->get();
+               $Core_Question = $this->surveyQuestion
+               ->where('type', '=', 'Core Competencies')
+                      ->get();
+               $Org_Question = $this->surveyQuestion
+               ->where('type', '=', 'Organizational Competencies')
+                      ->get();
         return view('hr.lnd.surveyForm')
         ->with('Technical_Question', $Technical_Question)
         ->with('Leadership_Question', $Leadership_Question)
         ->with('all_employeePlantilla', $all_employeePlantilla)
+        ->with('Core_Question', $Core_Question)
+        ->with('department', $department)
+        ->with('Org_Question', $Org_Question)
         ->with('edit_form', $edit_form)
         ->with('all_surveyForm', $all_surveyForm);
     }
@@ -156,16 +190,18 @@ class surveyFormController extends Controller
             $details = [];
             if ($request->question) {
                 $request->validate([
-                    'question' => 'required|min:1'
+                    'question' => 'required|min:1',
+                    'standard' => 'required|min:1'
                     ]);
 
                 $this->surveyFormDetails->where('form_id', $id)->delete();
 
                 for ($i = 0; $i < count($request->question); $i++) {
-                    if ($request->question[$i] != null) {
+                    if ($request->question != "" && $request->standard != "") {
                         $details[] = [
                             'form_id' => $id,
                             'question_id' => $request->question[$i],
+                            'standard' => $request->standard[$i],
                         ];
                     }
                 }
@@ -189,6 +225,12 @@ class surveyFormController extends Controller
     public function destroy($id)
     {
         $this->surveyFormDetails->where('form_id', $id)->delete();
-        $this->surveyForm->destroy($id);
+        if($this->surveyForm->destroy($id))
+        {
+        Session::flash('alert', 'success|Record has been Deleted');
+        }else{
+            Session::flash('alert', 'danger|Record has not been Deleted');
+        }
+        return redirect()->back();
     }
 }

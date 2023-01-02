@@ -17,6 +17,7 @@ class CreateSurveyFormDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('form_id')->nullable();
             $table->unsignedBigInteger('question_id')->nullable();
+            $table->string('standard')->nullable();
             $table->timestamps();
 
             $table->foreign('form_id')->references('id')->on('survey_forms')->onDelete('cascade');

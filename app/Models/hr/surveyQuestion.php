@@ -11,11 +11,12 @@ class surveyQuestion extends Model
 
     public function surverFormDetails()
     {
-        return $this->hasMany(surveyFormDetails::class,'question_id');
+        return $this->hasMany(surveyFormDetails::class, 'question_id');
     }
 
-    public function surveyAnswer()
+    public function surveyAnswerDetails()
     {
-        return $this->hasMany(surveyAnswer::class,'question_id');
+        return $this->hasOne(surveyAnswerDetails::class, 'question_id');
     }
+
 }
